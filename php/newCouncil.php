@@ -2,15 +2,15 @@
 // Include the database connection
 include 'db.php';
 
-// Retrieve data from the frontend
+// Retrieve the section name and council name from the frontend
 $section_name = $_POST['section_name'];
 $council_name = $_POST['council_name'];
 
-// Check if both section_name and council_name are provided
+// Check if the required data is provided
 if (empty($section_name) || empty($council_name)) {
     echo json_encode([
         "status" => "error",
-        "message" => "Both section name and council name are required."
+        "message" => "Section name and council name are required."
     ]);
     exit;
 }
@@ -27,23 +27,33 @@ if (!$result) {
     exit;
 }
 
+// Get the current section data and decode it as an associative array
 $currentData = pg_fetch_assoc($result);
-$currentcouncils = json_decode($currentData['section_data'], true);
+$sectionData = json_decode($currentData['section_data'], true);
 
-// Check if the council exists in the current data
-if (!isset($currentcouncils['council'][$council_name])) {
-    echo json_encode([
-        "status" => "error",
-        "message" => "The specified council does not exist."
-    ]);
-    exit;
+// Ensure the current section data is an object
+if (!is_array($sectionData)) {
+    $sectionData = [];
 }
 
-// Delete the council from the councils object
-unset($currentcouncils['council'][$council_name]);
+// Check if 'councils' key exists, if not, initialize it as an empty object
+if (!isset($sectionData['council']) || !is_array($sectionData['council'])) {
+    $sectionData['councils'] = [];
+}
 
-// Update the content table with the modified councils data
-$updatedData = json_encode($currentcouncils);
+// Create a new council object with `text` and `image` set to null
+$newcouncil = [
+    'text' => null,
+    'image' => null
+];
+
+// Add the new council to the councils object
+$sectionData['council'][$council_name] = $newcouncil;
+
+// Encode the updated data as JSON
+$updatedData = json_encode($sectionData);
+
+// Update the content table with the modified section data
 $updateQuery = "UPDATE content SET section_data = $1 WHERE section_name = $2";
 $updateResult = pg_query_params($connection, $updateQuery, [$updatedData, $section_name]);
 
@@ -58,6 +68,6 @@ if (!$updateResult) {
 // Return a success response
 echo json_encode([
     "status" => "success",
-    "message" => "Council deleted successfully."
+    "message" => "New council created successfully."
 ]);
 ?>

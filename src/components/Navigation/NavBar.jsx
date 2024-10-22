@@ -21,6 +21,7 @@ export default function Navbar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [opened, { open, close }] = useDisclosure(false);
+  const [visible, setVisible] = useState(true);
 
   const confirmModalRef = useRef(null); // Ref for ConfirmModal
 

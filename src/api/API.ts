@@ -18,6 +18,10 @@ const fetchAllGallery = `${apiUrl}/fetchAllGallery.php`;
 const createGallery = `${apiUrl}/createGallery.php`;
 const updateGallery = `${apiUrl}/updateGallery.php`;
 const deleteGallery = `${apiUrl}/deleteGallery.php`;
+const fetchAllCouncils = `${apiUrl}/fetchAllCouncils.php`;
+const createCouncil = `${apiUrl}/createCouncil.php`;
+const updateCouncil = `${apiUrl}/updateCouncil.php`;
+const deleteCouncil = `${apiUrl}/deleteCouncil.php`;
 
 
 
@@ -39,6 +43,10 @@ const api = {
     createGallery,
     updateGallery,
     deleteGallery,
+    fetchAllCouncils,
+    createCouncil,
+    updateCouncil,
+    deleteCouncil,
 }
 
 export { api };

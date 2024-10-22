@@ -3,6 +3,7 @@
 // export {default as screen} from './screen';
 export * from './Login';
 export * from './SplashScreen';
+export * from './Departments';
 
 
 

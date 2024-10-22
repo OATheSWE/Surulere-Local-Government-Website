@@ -3,7 +3,7 @@
 include 'db.php';
 
 // Define the upload directory for images
-$uploadDir = 'files/';
+$uploadDir = 'uploads/';
 
 // Retrieve data from the frontend
 $department_name = $_POST['department_name'];

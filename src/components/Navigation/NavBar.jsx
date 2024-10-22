@@ -127,12 +127,12 @@ export default function Navbar() {
           />
         </div>
 
-        <div className="border-gray-500 rounded-full border flex items-center max-w-[250px] px-3 py-2 bg-transparent max-lg:hidden ml-60">
-          <IconSearch size={"22px"} className="text-gray-500 mr-2" />
+        <div className="border-white rounded-full border flex items-center max-w-[250px] px-3 py-2 bg-transparent max-lg:hidden ml-60">
+          <IconSearch size={"22px"} className="text-white mr-2" />
           <input
             type="text"
             placeholder="Search"
-            className="bg-transparent w-full text-gray-900 placeholder:text-gray-500 outline-none"
+            className="bg-transparent w-full text-white placeholder:text-white outline-none"
           />
         </div>
 

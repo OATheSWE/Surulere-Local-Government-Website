@@ -20,6 +20,10 @@ $departments = [];
 
 // Fetch each department and store it in the array
 while ($row = pg_fetch_assoc($result)) {
+    // Decode the department_data column
+    if (isset($row['department_data'])) {
+        $row['department_data'] = json_decode($row['department_data'], true);
+    }
     $departments[] = $row;
 }
 

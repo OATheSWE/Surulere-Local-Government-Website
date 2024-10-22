@@ -1,0 +1,15 @@
+.mantine-Drawer-inner {
+    left: 0;
+}
+
+.mantine-Drawer-header {
+    background-color: #F8F8F8;
+}
+
+.mantine-Drawer-body {
+    padding: 0;
+}
+
+[data-mantine-color-scheme=light] .m-86a44da5 {
+    --_cb-color: white;
+}

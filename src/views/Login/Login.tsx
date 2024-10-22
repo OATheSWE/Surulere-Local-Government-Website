@@ -61,7 +61,7 @@ const Login: React.FC = () => {
         const encryptedUserId = CryptoJS.AES.encrypt(userId, secretKey).toString();
         localStorage.setItem("aba", encryptedUserId);
         setTimeout(() => {
-          router.replace("/departments");
+          router.replace("/admin/departments");
         }, 1500);
       } else {
         toggleVisibility();

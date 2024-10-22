@@ -28,6 +28,6 @@ while ($row = pg_fetch_assoc($fetchResult)) {
 // Return the list of blogs in JSON format
 echo json_encode([
     "status" => "success",
-    "data" => $blogs
+    "blogs" => $blogs
 ]);
 ?>

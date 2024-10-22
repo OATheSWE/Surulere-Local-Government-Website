@@ -6,7 +6,10 @@ const fetchAllDepartments = `${apiUrl}/fetchAllDepartments.php`;
 const createDepartment = `${apiUrl}/createDepartment.php`;
 const updateDepartment = `${apiUrl}/updateDepartment.php`;
 const deleteDepartment = `${apiUrl}/deleteDepartment.php`;
-
+const fetchAllBlogs = `${apiUrl}/fetchAllBlogs.php`;
+const createBlog = `${apiUrl}/createBlog.php`;
+const updateBlog = `${apiUrl}/updateBlog.php`;
+const deleteBlog = `${apiUrl}/deleteBlog.php`;
 
 
 
@@ -16,6 +19,10 @@ const api = {
     createDepartment,
     updateDepartment,
     deleteDepartment,
+    fetchAllBlogs,
+    createBlog,
+    updateBlog,
+    deleteBlog,
 }
 
 export { api };

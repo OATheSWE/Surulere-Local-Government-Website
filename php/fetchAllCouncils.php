@@ -20,6 +20,10 @@ $councils = [];
 
 // Fetch each council and store it in the array
 while ($row = pg_fetch_assoc($result)) {
+    // Decode the council_data column
+    if (isset($row['council_data'])) {
+        $row['council_data'] = json_decode($row['council_data'], true);
+    }
     $councils[] = $row;
 }
 

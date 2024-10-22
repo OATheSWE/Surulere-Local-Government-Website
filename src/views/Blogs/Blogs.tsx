@@ -22,43 +22,44 @@ import { api } from "@/src/api";
 import { styles } from "@/src/data";
 import { router } from "expo-router";
 
-export default function Departments() {
-  const [departments, setDepartments] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState(null);
+export default function Blogs() {
+  const [blogs, setBlogs] = useState([]);
+  const [selectedBlog, setSelectedBlog] = useState(null);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [visible, setVisible] = useState(true); // For LoadingOverlay visibility
-  const [visible2, setVisible2] = useState(false); // For LoadingOverlay visibility
-  const [modalText, setModalText] = useState(""); // For success modal text
+  const [visible, setVisible] = useState(true);
+  const [visible2, setVisible2] = useState(false);
+  const [modalText, setModalText] = useState("");
   const successModalRef = useRef(null);
-  const confirmModalRef = useRef(null); // Confirm modal reference
+  const confirmModalRef = useRef(null);
   const [fileError, setFileError] = useState("");
 
   const form = useForm({
     initialValues: {
-      department_name: "",
-      department_text: "",
-      image: null, // For storing the uploaded image object
+      blog_title: "",
+      blog_content: "",
+      blog_author: "",
+      image: null,
     },
   });
 
   useEffect(() => {
-    fetchDepartments();
+    fetchBlogs();
   }, []);
 
-  const fetchDepartments = async () => {
+  const fetchBlogs = async () => {
     try {
-      const response = await axios.get(api.fetchAllDepartments, {
+      const response = await axios.get(api.fetchAllBlogs, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
       if (response.data.status === "success") {
-        setDepartments(response.data.departments);
+        setBlogs(response.data.blogs);
         toggleVisibility();
       }
     } catch (error) {
-      console.error("Failed to fetch departments:", error);
+      console.error("Failed to fetch blogs:", error);
     }
   };
 
@@ -79,47 +80,45 @@ export default function Departments() {
     }, 0);
   };
 
-  const handleAddDepartment = () => {
+  const handleAddBlog = () => {
     form.reset();
     setAddModalOpen(true);
   };
 
-  const handleEditDepartment = (dept) => {
+  const handleEditBlog = (blog) => {
     form.setValues({
-      department_name: dept.department_name,
-      department_text: dept.department_data.text,
-      image: dept.department_data.image, // Assuming the image is already an object; otherwise, process it accordingly
+      blog_title: blog.blog_data.blog_title,
+      blog_content: blog.blog_data.blog_content,
+      blog_author: blog.blog_data.blog_author,
+      image: blog.blog_data.image,
     });
-    setSelectedDepartment(dept);
+    setSelectedBlog(blog);
     setEditModalOpen(true);
   };
 
   const handleAddSubmit = async (values) => {
     toggleVisibility2();
-    const departmentPayload = {
-      department_name: values.department_name,
-      department_data: JSON.stringify({
-        text: values.department_text,
+    const blogPayload = {
+      blog_data: JSON.stringify({
+        blog_title: values.blog_title,
+        blog_content: values.blog_content,
+        blog_author: values.blog_author,
         image: values.image,
       }),
     };
 
     try {
-      const response = await axios.post(
-        api.createDepartment,
-        departmentPayload,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
+      const response = await axios.post(api.createBlog, blogPayload, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
 
       toggleVisibility2();
       if (response.data.status === "success") {
         handleOpenSuccessModal(response.data.message);
         setTimeout(() => {
-          router.replace("/admin/departments"); // Use replace instead of push for navigation
+          router.replace("/admin/blogs");
         }, 1500);
         setAddModalOpen(false);
         form.reset();
@@ -136,31 +135,28 @@ export default function Departments() {
 
   const handleEditSubmit = async (values) => {
     toggleVisibility2();
-    const departmentPayload = {
-      department_id: selectedDepartment.department_id,
-      department_name: values.department_name,
-      department_data: JSON.stringify({
-        text: values.department_text,
+    const blogPayload = {
+      blog_id: selectedBlog.blog_id,
+      blog_data: JSON.stringify({
+        blog_title: values.blog_title,
+        blog_content: values.blog_content,
+        blog_author: values.blog_author,
         image: values.image,
       }),
     };
 
     try {
-      const response = await axios.post(
-        api.updateDepartment,
-        departmentPayload,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
+      const response = await axios.post(api.updateBlog, blogPayload, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
 
       toggleVisibility2();
       if (response.data.status === "success") {
         handleOpenSuccessModal(response.data.message);
         setTimeout(() => {
-          router.replace("/admin/departments"); // Use replace instead of push for navigation
+          router.replace("/admin/blogs");
         }, 1500);
         setEditModalOpen(false);
         form.reset();
@@ -175,10 +171,44 @@ export default function Departments() {
     }
   };
 
+  const handleDeleteBlog = () => {
+    if (confirmModalRef.current) {
+      confirmModalRef.current.openModal();
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    toggleVisibility2();
+    try {
+      const response = await axios.post(
+        api.deleteBlog,
+        { blog_id: selectedBlog.blog_id },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      toggleVisibility2();
+      if (response.data.status === "success") {
+        handleOpenSuccessModal(response.data.message);
+        setBlogs(blogs.filter((blog) => blog.blog_id !== selectedBlog.blog_id));
+      } else {
+        handleOpenSuccessModal(response.data.message);
+      }
+    } catch (error) {
+      toggleVisibility2();
+      handleOpenSuccessModal(
+        error.response?.data?.message || "An error occurred"
+      );
+    }
+  };
+
   const handleLogoChange = (file) => {
     if (file) {
       const fileType = file.type.split("/")[1];
-      const fileSize = file.size / 1024; // convert to KB
+      const fileSize = file.size / 1024;
 
       if (
         ["jpeg", "png", "jpg", "jfif"].includes(fileType) &&
@@ -194,7 +224,7 @@ export default function Departments() {
           };
           form.setFieldValue("image", logoData);
         };
-        reader.readAsDataURL(file); // Trigger file read
+        reader.readAsDataURL(file);
         setFileError("");
       } else {
         setFileError(
@@ -203,44 +233,6 @@ export default function Departments() {
       }
     } else {
       setFileError("File selection is required.");
-    }
-  };
-
-  const handleDeleteDepartment = () => {
-    if (confirmModalRef.current) {
-      confirmModalRef.current.openModal();
-    }
-  };
-
-  const handleConfirmDelete = async () => {
-    toggleVisibility2();
-    try {
-      const response = await axios.post(
-        api.deleteDepartment,
-        { department_id: selectedDepartment.department_id },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-
-      toggleVisibility2();
-      if (response.data.status === "success") {
-        handleOpenSuccessModal(response.data.message);
-        setDepartments(
-          departments.filter(
-            (dept) => dept.department_id !== selectedDepartment.department_id
-          )
-        );
-      } else {
-        handleOpenSuccessModal(response.data.message);
-      }
-    } catch (error) {
-      toggleVisibility2();
-      handleOpenSuccessModal(
-        error.response?.data?.message || "An error occurred"
-      );
     }
   };
 
@@ -263,13 +255,13 @@ export default function Departments() {
         className={`bg-white w-full rounded-lg p-4`}
         style={slideInStyles}
       >
-        <h1 className="text-center font-bold">Departments</h1>
+        <h1 className="text-center font-bold">Blogs</h1>
         <Button
-          onClick={handleAddDepartment}
+          onClick={handleAddBlog}
           leftSection={<IconPlus />}
           className="bg-primary rounded-full border-primary border-2 hover:bg-transparent hover:text-black transition duration-300 mt-5"
         >
-          Add Department
+          Add Blog
         </Button>
         <SimpleGrid
           cols={{ base: 1, sm: 2, lg: 3 }}
@@ -277,29 +269,35 @@ export default function Departments() {
           verticalSpacing={{ base: "md", sm: "xl" }}
           mt={`2rem`}
         >
-          {departments.map((dept) => (
+          {blogs.map((blog) => (
+            <div key={blog.blog_id}>
             <BackgroundImage
-              key={dept.department_id}
               className={`max-w-[300px] w-full h-[200px] border-primary border-2 hover:-translate-y-2 duration-300 transition flex flex-col justify-between p-4 rounded-lg`}
-              src={`http://localhost:8000/${encodeURIComponent(dept.department_data.image.path)}`}
+              src={`http://localhost:8000/${encodeURIComponent(
+                blog.blog_data.image.file_path
+              )}`}
             >
               <div>
-                <h2 className="text-white bg-primary w-full p-1 rounded-full text-center">{dept.department_name}</h2>
+                <h2 className="text-white bg-primary w-full p-1 rounded-full text-center">
+                  {blog.blog_data.blog_title}
+                </h2>
               </div>
               <div className="flex justify-between">
                 <IconEdit
-                  onClick={() => handleEditDepartment(dept)}
+                  onClick={() => handleEditBlog(blog)}
                   className="cursor-pointer bg-primary h-[30px] w-[30px] p-1 rounded-full hover:bg-secondary transition duration-300"
                 />
                 <IconTrash
                   onClick={() => {
-                    setSelectedDepartment(dept);
-                    handleDeleteDepartment();
+                    setSelectedBlog(blog);
+                    handleDeleteBlog();
                   }}
                   className="cursor-pointer bg-primary h-[30px] w-[30px] p-1 rounded-full hover:bg-secondary transition duration-300"
                 />
               </div>
             </BackgroundImage>
+            <p className="text-gray-500 text-[14px]">By {blog.blog_data.blog_author}</p>
+            </div>
           ))}
         </SimpleGrid>
       </animated.div>
@@ -308,7 +306,7 @@ export default function Departments() {
       <Modal
         opened={isAddModalOpen}
         onClose={() => setAddModalOpen(false)}
-        title="Add Department"
+        title="Add Blog"
         classNames={classes}
       >
         <LoadingOverlay
@@ -319,24 +317,34 @@ export default function Departments() {
         />
         <form onSubmit={form.onSubmit(handleAddSubmit)}>
           <TextInput
+            label="Blog Title"
+            placeholder="Blog Title"
             required
-            label="Department Name"
-            {...form.getInputProps("department_name")}
+            {...form.getInputProps("blog_title")}
+            mb={`md`}
+          />
+          <TextInput
+            label="Blog Author"
+            placeholder="Blog Author"
+            required
+            {...form.getInputProps("blog_author")}
             mb={`md`}
           />
           <Textarea
-            label="Description"
-            {...form.getInputProps("department_text")}
+            label="Blog Content"
+            placeholder="Blog Content"
+            required
+            {...form.getInputProps("blog_content")}
             mb={`md`}
             minRows={4}
-            required
             autosize
           />
           <FileInput
-            label="Upload Image (JPEG, PNG, JPG only)"
-            required
+            label="Select Image"
             onChange={handleLogoChange}
             error={fileError}
+            placeholder="Upload Blog Image"
+            required
             mb={`md`}
           />
           <Button
@@ -352,7 +360,7 @@ export default function Departments() {
       <Modal
         opened={isEditModalOpen}
         onClose={() => setEditModalOpen(false)}
-        title="Edit Department"
+        title="Edit Blog"
         classNames={classes}
       >
         <LoadingOverlay
@@ -363,25 +371,34 @@ export default function Departments() {
         />
         <form onSubmit={form.onSubmit(handleEditSubmit)}>
           <TextInput
+            label="Blog Title"
+            placeholder="Blog Title"
             required
-            label="Department Name"
-            {...form.getInputProps("department_name")}
+            {...form.getInputProps("blog_title")}
+            mb={`md`}
+          />
+          <TextInput
+            label="Blog Author"
+            placeholder="Blog Author"
+            required
+            {...form.getInputProps("blog_author")}
             mb={`md`}
           />
           <Textarea
-            label="Description"
-            {...form.getInputProps("department_text")}
+            label="Blog Content"
+            placeholder="Blog Content"
+            required
+            {...form.getInputProps("blog_content")}
             mb={`md`}
             minRows={4}
             autosize
-            required
           />
           <FileInput
-            label="Upload Image (JPEG, PNG, JPG only)"
-            accept="image/jpeg, image/png, image/jpg"
-            required
+            label="Select Image"
             onChange={handleLogoChange}
             error={fileError}
+            placeholder="Upload Blog Image"
+            required
             mb={`md`}
           />
           <Button
@@ -393,7 +410,6 @@ export default function Departments() {
         </form>
       </Modal>
 
-      {/* Confirm & Success Modals */}
       <ConfirmModal
         ref={confirmModalRef}
         onConfirm={handleConfirmDelete}

@@ -9,7 +9,7 @@ $uploadDir = 'uploads/';
 $blog_data = json_decode($_POST['blog_data'], true);
 
 // Check if blog_data is provided and contains required fields
-if (empty($blog_data) || !isset($blog_data['title'], $blog_data['content'], $blog_data['image'])) {
+if (empty($blog_data) || !isset($blog_data['blog_title'], $blog_data['blog_content'], $blog_data['blog_author'], $blog_data['image'])) {
     echo json_encode([
         "status" => "error",
         "message" => "Blog data is incomplete."

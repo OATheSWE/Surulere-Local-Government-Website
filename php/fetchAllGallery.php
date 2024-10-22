@@ -27,6 +27,6 @@ while ($row = pg_fetch_assoc($fetchResult)) {
 // Return the list of gallery items in JSON format
 echo json_encode([
     "status" => "success",
-    "data" => $galleryItems
+    "gallery" => $galleryItems
 ]);
 ?>

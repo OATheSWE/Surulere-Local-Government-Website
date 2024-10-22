@@ -22,9 +22,9 @@ import { api } from "@/src/api";
 import { styles } from "@/src/data";
 import { router } from "expo-router";
 
-export default function Adverts() {
-  const [adverts, setAdverts] = useState([]);
-  const [selectedAdvert, setSelectedAdvert] = useState(null);
+export default function Gallery() {
+  const [gallery, setGallery] = useState([]);
+  const [selectedGallery, setSelectedGallery] = useState(null);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -41,22 +41,22 @@ export default function Adverts() {
   });
 
   useEffect(() => {
-    fetchadverts();
+    fetchGallery();
   }, []);
 
-  const fetchadverts = async () => {
+  const fetchGallery = async () => {
     try {
-      const response = await axios.get(api.fetchAllAdverts, {
+      const response = await axios.get(api.fetchAllGallery, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
       if (response.data.status === "success") {
-        setAdverts(response.data.adverts);
+        setGallery(response.data.gallery);
         toggleVisibility();
       }
     } catch (error) {
-      console.error("Failed to fetch adverts:", error);
+      console.error("Failed to fetch gallery:", error);
     }
   };
 
@@ -77,27 +77,27 @@ export default function Adverts() {
     }, 0);
   };
 
-  const handleAddAdvert = () => {
+  const handleAddGallery = () => {
     form.reset();
     setAddModalOpen(true);
   };
 
-  const handleEditAdvert = (advert) => {
+  const handleEditGallery = (Gallery) => {
     form.setValues({
-      image: advert.advert_data,
+      image: Gallery.gallery_data,
     });
-    setSelectedAdvert(advert);
+    setSelectedGallery(Gallery);
     setEditModalOpen(true);
   };
 
   const handleAddSubmit = async (values) => {
     toggleVisibility2();
-    const advertPayload = {
-      advert_image: JSON.stringify(values.image),
+    const GalleryPayload = {
+      image_data: JSON.stringify(values.image),
     };
 
     try {
-      const response = await axios.post(api.createAdvert, advertPayload, {
+      const response = await axios.post(api.createGallery, GalleryPayload, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
@@ -107,7 +107,7 @@ export default function Adverts() {
       if (response.data.status === "success") {
         handleOpenSuccessModal(response.data.message);
         setTimeout(() => {
-          router.replace("/admin/adverts");
+          router.replace("/admin/gallery");
         }, 1500);
         setAddModalOpen(false);
         form.reset();
@@ -124,13 +124,13 @@ export default function Adverts() {
 
   const handleEditSubmit = async (values) => {
     toggleVisibility2();
-    const advertPayload = {
-      advert_id: selectedAdvert.advert_id,
-      advert_image: JSON.stringify(values.image),
+    const GalleryPayload = {
+      gallery_id: selectedGallery.gallery_id,
+      image_data: JSON.stringify(values.image),
     };
 
     try {
-      const response = await axios.post(api.updateAdvert, advertPayload, {
+      const response = await axios.post(api.updateGallery, GalleryPayload, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
@@ -140,7 +140,7 @@ export default function Adverts() {
       if (response.data.status === "success") {
         handleOpenSuccessModal(response.data.message);
         setTimeout(() => {
-          router.replace("/admin/adverts");
+          router.replace("/admin/gallery");
         }, 1500);
         setEditModalOpen(false);
         form.reset();
@@ -155,7 +155,7 @@ export default function Adverts() {
     }
   };
 
-  const handleDeleteAdvert = () => {
+  const handleDeleteGallery = () => {
     if (confirmModalRef.current) {
       confirmModalRef.current.openModal();
     }
@@ -165,8 +165,8 @@ export default function Adverts() {
     toggleVisibility2();
     try {
       const response = await axios.post(
-        api.deleteAdvert,
-        { advert_id: selectedAdvert.advert_id },
+        api.deleteGallery,
+        { gallery_id: selectedGallery.gallery_id },
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -177,9 +177,9 @@ export default function Adverts() {
       toggleVisibility2();
       if (response.data.status === "success") {
         handleOpenSuccessModal(response.data.message);
-        setAdverts(
-          adverts.filter(
-            (advert) => advert.advert_id !== selectedAdvert.advert_id
+        setGallery(
+          gallery.filter(
+            (Gallery) => Gallery.gallery_id !== selectedGallery.gallery_id
           )
         );
       } else {
@@ -243,13 +243,13 @@ export default function Adverts() {
         className={`bg-white w-full rounded-lg p-4`}
         style={slideInStyles}
       >
-        <h1 className="text-center font-bold">Adverts</h1>
+        <h1 className="text-center font-bold">Gallery</h1>
         <Button
-          onClick={handleAddAdvert}
+          onClick={handleAddGallery}
           leftSection={<IconPlus />}
           className="bg-primary rounded-full border-primary border-2 hover:bg-transparent hover:text-black transition duration-300 mt-5"
         >
-          Add Advert
+          Add Gallery
         </Button>
         <SimpleGrid
           cols={{ base: 1, sm: 2, lg: 3 }}
@@ -257,23 +257,23 @@ export default function Adverts() {
           verticalSpacing={{ base: "md", sm: "xl" }}
           mt={`2rem`}
         >
-          {adverts.map((advert) => (
+          {gallery.map((Gallery) => (
             <BackgroundImage
-              key={advert.advert_id}
+              key={Gallery.gallery_id}
               className={`max-w-[300px] w-full h-[200px] border-primary border-2 hover:-translate-y-2 duration-300 transition flex flex-col justify-between p-4 rounded-lg`}
               src={`http://localhost:8000/${encodeURIComponent(
-                advert.advert_data.file_path
+                Gallery.gallery_data.file_path
               )}`}
             >
               <div className="flex justify-between">
                 <IconEdit
-                  onClick={() => handleEditAdvert(advert)}
+                  onClick={() => handleEditGallery(Gallery)}
                   className="cursor-pointer bg-primary h-[30px] w-[30px] p-1 rounded-full hover:bg-secondary transition duration-300"
                 />
                 <IconTrash
                   onClick={() => {
-                    setSelectedAdvert(advert);
-                    handleDeleteAdvert();
+                    setSelectedGallery(Gallery);
+                    handleDeleteGallery();
                   }}
                   className="cursor-pointer bg-primary h-[30px] w-[30px] p-1 rounded-full hover:bg-secondary transition duration-300"
                 />
@@ -287,7 +287,7 @@ export default function Adverts() {
       <Modal
         opened={isAddModalOpen}
         onClose={() => setAddModalOpen(false)}
-        title="Add Advert"
+        title="Add Gallery"
         classNames={classes}
       >
         <LoadingOverlay
@@ -298,7 +298,7 @@ export default function Adverts() {
         />
         <form onSubmit={form.onSubmit(handleAddSubmit)}>
           <FileInput
-            label="Select Advert"
+            label="Select Gallery"
             onChange={handleLogoChange}
             error={fileError}
             placeholder="Upload Image"
@@ -318,7 +318,7 @@ export default function Adverts() {
       <Modal
         opened={isEditModalOpen}
         onClose={() => setEditModalOpen(false)}
-        title="Edit Advert"
+        title="Edit Gallery"
         classNames={classes}
       >
         <LoadingOverlay
@@ -329,7 +329,7 @@ export default function Adverts() {
         />
         <form onSubmit={form.onSubmit(handleEditSubmit)}>
           <FileInput
-            label="Select Advert"
+            label="Select Gallery"
             onChange={handleLogoChange}
             error={fileError}
             placeholder="Upload Image"

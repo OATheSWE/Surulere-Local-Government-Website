@@ -6,6 +6,7 @@ export * from './SplashScreen';
 export * from './Departments';
 export * from './Blogs';
 export * from './Adverts';
+export * from './Gallery';
 
 
 

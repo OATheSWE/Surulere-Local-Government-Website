@@ -10,6 +10,10 @@ const fetchAllBlogs = `${apiUrl}/fetchAllBlogs.php`;
 const createBlog = `${apiUrl}/createBlog.php`;
 const updateBlog = `${apiUrl}/updateBlog.php`;
 const deleteBlog = `${apiUrl}/deleteBlog.php`;
+const fetchAllAdverts = `${apiUrl}/fetchAllAdverts.php`;
+const createAdvert = `${apiUrl}/createAdvert.php`;
+const updateAdvert = `${apiUrl}/updateAdvert.php`;
+const deleteAdvert = `${apiUrl}/deleteAdvert.php`;
 
 
 
@@ -23,6 +27,10 @@ const api = {
     createBlog,
     updateBlog,
     deleteBlog,
+    fetchAllAdverts,
+    createAdvert,
+    updateAdvert,
+    deleteAdvert,
 }
 
 export { api };

@@ -6,5 +6,7 @@ export * from './text-field';
 export * from './SuccessModal';
 export * from './ConfirmModal';
 export * from './Navigation';
+export * from './NavBar';
+export {default as TopHeader } from './TopHeader';
 
 

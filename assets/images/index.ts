@@ -3,9 +3,11 @@ import { Asset } from 'expo-asset';
 
 // @ts-ignore
 const logo = Asset.fromModule(require('./logo.png')).uri;
+const topImage = Asset.fromModule(require('./image.png')).uri;
 
 const ImageCollection = {
    logo,
+   topImage
 }
 
 export { ImageCollection };

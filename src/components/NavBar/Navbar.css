@@ -1,0 +1,11 @@
+.mantine-Drawer-inner {
+    left: 0;
+}
+
+.mantine-Drawer-header {
+    background: #98CD5B;
+}
+
+[data-mantine-color-scheme=light] .m-86a44da5 {
+    --_cb-color: #98CD5B;
+}

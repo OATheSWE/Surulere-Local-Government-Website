@@ -16,15 +16,15 @@ export const dashboardLinks = [
 ];
 
 export const navLinks = [
-  { text: "Home", href: "/home" },
-  { text: "About", href: "/about" },
+  { text: "Home", href: "/website/home" },
+  { text: "Departments", href: "/website/departments" },
   {
-    text: "Council's Administration",
+    text: "Secretariat",
     links: [
-      { href: "/exec", text: "Executive Council" },
-      { href: "/magt", text: "Management Team" },
-      { href: "/leg", text: "Legislative Arm" },
-      { href: "/other", text: "Other Appointees" },
+      { href: "/website/exec", text: "Executive Council" },
+      { href: "/website/magt", text: "Management Team" },
+      { href: "/website/leg", text: "Legislative Arm" },
+      { href: "/website/other", text: "Other Appointees" },
     ],
     icon: (
       <IconChevronDown
@@ -36,9 +36,9 @@ export const navLinks = [
   {
     text: "Media",
     links: [
-      { href: "/blog", text: "Blog" },
-      { href: "/gallery", text: "Gallery" },
-      { href: "/events", text: "Events" },
+      { href: "/website/blog", text: "Blog" },
+      { href: "/website/gallery", text: "Gallery" },
+      { href: "/website/events", text: "Events" },
     ],
     icon: (
       <IconChevronDown
@@ -47,7 +47,7 @@ export const navLinks = [
       />
     ),
   },
-  { text: "History", href: "/history" },
-  { text: "Contact Us", href: "/contact" },
-  { text: "Login", href: "/login" },
+  { text: "History", href: "/website/history" },
+  { text: "Contact Us", href: "/website/contact" },
+  // { text: "Login", href: "/login" },
 ];

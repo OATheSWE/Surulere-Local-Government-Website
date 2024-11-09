@@ -6,7 +6,7 @@ const SubscriptionForm: React.FC = () => {
   return (
     <BackgroundImage
       src={ImageCollection.subform} // Replace with your actual image path
-      className="p-10 md:p-16"
+      className="p-10 md:p-16 relative z-10"
     >
       {/* Overlay to darken the background */}
       <div className="absolute inset-0 bg-black opacity-50"></div>

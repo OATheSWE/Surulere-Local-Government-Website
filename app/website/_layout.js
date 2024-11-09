@@ -14,7 +14,7 @@ const App = () => {
       <Image
         src={ImageCollection.topImage}
         alt="Design"
-        className={`w-full h-[15px] -mt-5`}
+        className={`w-full h-[15px] -mt-5 relative z-10`}
         loading="lazy"
       />
       <Slot />

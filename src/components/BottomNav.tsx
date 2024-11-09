@@ -4,7 +4,7 @@ import { styles } from '../data';
 
 const BottomNav: React.FC = () => {
   return (
-    <footer className={`py-6 bg-gray-50 text-black space-y-6 md:space-y-0 flex max-md:flex-col md:justify-between justify-center ${styles.body}`}>
+    <footer className={`py-6 bg-gray-50 text-black space-y-6 md:space-y-0 flex max-md:flex-col md:justify-between justify-center ${styles.body} relative z-10`}>
       {/* Address Section */}
       <div className="space-y-2">
         <h2 className="font-bold text-lg">Surulere</h2>

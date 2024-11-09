@@ -13,7 +13,7 @@ import { Link } from "expo-router";
 const TopHeader: React.FC = () => {
   return (
     <header
-      className={`flex items-center justify-between py-4 bg-lime-500 space-x-4 ${styles.body}`}
+      className={`flex items-center justify-between py-4 bg-lime-500 space-x-4 ${styles.body} relative z-10`}
     >
       {/* Search Bar */}
       <TextInput

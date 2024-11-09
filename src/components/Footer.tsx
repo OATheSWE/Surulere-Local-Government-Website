@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
   }, []);
 
   return (
-    <footer className={`flex flex-col md:flex-row justify-between items-center py-4 bg-primary text-black space-y-2 md:space-y-0 md:space-x-4 ${styles.body}`}>
+    <footer className={`flex flex-col md:flex-row justify-between items-center py-4 bg-primary text-black space-y-2 md:space-y-0 md:space-x-4 ${styles.body} relative z-10`}>
       {/* Copyright and Developer Information */}
       <div className="text-sm text-center md:text-left">
         <p>© Copyright <span className='font-semibold'>{currentYear}</span> Surulere LGA. All Rights Reserved</p>

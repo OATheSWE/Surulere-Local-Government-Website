@@ -141,9 +141,9 @@ export default function NavBar() {
   });
 
   return (
-    <Box className="">
+    <Box className="relative z-[10]">
       <header
-        className={`flex lg:justify-center justify-end items-center font-sans shadow-xl ${classes.header} ${styles.body}`}
+        className={`flex lg:justify-center justify-end items-center font-sans bg-white ${classes.header} ${styles.body}`}
       >
         <Group h="100%" gap={0} className="hidden lg:flex">
           {items}

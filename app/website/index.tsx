@@ -1,3 +1,4 @@
+import { Landing } from "@/src/views";
 import { router } from "expo-router";
 import React from "react";
 ///@ts-ignore
@@ -5,7 +6,7 @@ import React from "react";
 
 const home = () => {
   return (
-      <div>Hello</div>
+      <Landing />
   );
 };
 

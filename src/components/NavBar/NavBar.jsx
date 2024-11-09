@@ -143,15 +143,15 @@ export default function NavBar() {
   return (
     <Box className="">
       <header
-        className={`flex md:justify-center justify-end items-center font-sans shadow-xl ${classes.header} ${styles.body}`}
+        className={`flex lg:justify-center justify-end items-center font-sans shadow-xl ${classes.header} ${styles.body}`}
       >
-        <Group h="100%" gap={0} className="hidden md:flex">
+        <Group h="100%" gap={0} className="hidden lg:flex">
           {items}
         </Group>
         <Burger
           opened={drawerOpened}
           onClick={toggleDrawer}
-          hiddenFrom="sm"
+          hiddenFrom="md"
           size={23}
           color="black"
         />
@@ -162,7 +162,7 @@ export default function NavBar() {
         onClose={closeDrawer}
         size="70%"
         position="right"
-        hiddenFrom="sm"
+        hiddenFrom="md"
         zIndex={1000000}
         className="font-sans text-white p-0 m-0"
       >

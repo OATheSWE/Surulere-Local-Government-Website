@@ -8,6 +8,7 @@ import NewsCarousel from "./News";
 import GalleryCarousel from "./Gallery";
 import KeyStatistics from "./Statistics";
 import MeetOurChairman from "./Chairman";
+import WelcomeToSurulere from "./Welcome";
 ///@ts-ignore
 
 const Landing = () => {
@@ -16,6 +17,7 @@ const Landing = () => {
       className={`${styles.body} relative z-[90]`}
       src={ImageCollection.logo}
     >
+      <WelcomeToSurulere />  
       <MeetOurChairman />
       <KeyStatistics />
       <GalleryCarousel />

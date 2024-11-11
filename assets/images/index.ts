@@ -10,6 +10,8 @@ const quality = Asset.fromModule(require('./quality.png')).uri;
 const sustain = Asset.fromModule(require('./sustain.png')).uri;
 const bgdesign = Asset.fromModule(require('./bgdesign.png')).uri;
 const chairman = Asset.fromModule(require('./chairman.png')).uri;
+const wave1 = Asset.fromModule(require('./wave1.png')).uri;
+const wave2 = Asset.fromModule(require('./wave2.png')).uri;
 
 const ImageCollection = {
    logo,
@@ -19,7 +21,9 @@ const ImageCollection = {
    quality,
    sustain,
    bgdesign,
-   chairman
+   chairman,
+   wave1,
+   wave2,
 }
 
 export { ImageCollection };

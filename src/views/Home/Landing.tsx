@@ -6,6 +6,7 @@ import SubscriptionForm from "./SubscriptionForm";
 import SustainableProgress from "./Sustainable";
 import NewsCarousel from "./News";
 import GalleryCarousel from "./Gallery";
+import KeyStatistics from "./Statistics";
 ///@ts-ignore
 
 const Landing = () => {
@@ -14,7 +15,8 @@ const Landing = () => {
       className={`${styles.body} relative z-[90]`}
       src={ImageCollection.logo}
     >
-       <GalleryCarousel /> 
+      <KeyStatistics />
+      <GalleryCarousel />
       <NewsCarousel />
       <SustainableProgress />
       <SubscriptionForm />

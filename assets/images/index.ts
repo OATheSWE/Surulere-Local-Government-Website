@@ -9,6 +9,7 @@ const goodh = Asset.fromModule(require('./goodh.png')).uri;
 const quality = Asset.fromModule(require('./quality.png')).uri;
 const sustain = Asset.fromModule(require('./sustain.png')).uri;
 const bgdesign = Asset.fromModule(require('./bgdesign.png')).uri;
+const chairman = Asset.fromModule(require('./chairman.png')).uri;
 
 const ImageCollection = {
    logo,
@@ -17,7 +18,8 @@ const ImageCollection = {
    goodh,
    quality,
    sustain,
-   bgdesign
+   bgdesign,
+   chairman
 }
 
 export { ImageCollection };

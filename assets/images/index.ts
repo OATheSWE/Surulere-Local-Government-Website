@@ -8,6 +8,7 @@ const subform = Asset.fromModule(require('./subform.png')).uri;
 const goodh = Asset.fromModule(require('./goodh.png')).uri;
 const quality = Asset.fromModule(require('./quality.png')).uri;
 const sustain = Asset.fromModule(require('./sustain.png')).uri;
+const bgdesign = Asset.fromModule(require('./bgdesign.png')).uri;
 
 const ImageCollection = {
    logo,
@@ -15,7 +16,8 @@ const ImageCollection = {
    subform,
    goodh,
    quality,
-   sustain
+   sustain,
+   bgdesign
 }
 
 export { ImageCollection };

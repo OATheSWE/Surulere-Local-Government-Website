@@ -5,7 +5,7 @@ import { ImageCollection } from "@/assets";
 const WelcomeToSurulere: React.FC = () => {
   return (
     <div className="relative">
-      <Image src={ImageCollection.wave2} alt="Vector 2" className="w-full absolute -top-7 md:-top-20" />
+      <Image src={ImageCollection.wave2} alt="Vector 2" className="w-full absolute -top-7 md:-top-[60px] lg:-top-[80px]" />
       <div className="bg-primary p-8 md:p-16 lg:px-32 relative overflow-hidden">
         {/* Decorative Shapes */}
         <div className="absolute top-0 left-0 w-[350px] h-[350px] md:w-[450px] md:h-[450px] rounded-full bg-[#90c462] opacity-50 transform -translate-x-10 -translate-y-10"></div>

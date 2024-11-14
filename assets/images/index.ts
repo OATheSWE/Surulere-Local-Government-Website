@@ -3,6 +3,7 @@ import { Asset } from 'expo-asset';
 
 // @ts-ignore
 const logo = Asset.fromModule(require('./logo.png')).uri;
+const hero = Asset.fromModule(require('./hero.png')).uri;
 const topImage = Asset.fromModule(require('./image.png')).uri;
 const subform = Asset.fromModule(require('./subform.png')).uri;
 const goodh = Asset.fromModule(require('./goodh.png')).uri;
@@ -26,6 +27,7 @@ const ImageCollection = {
    wave1,
    wave2,
    bg,
+   hero
 }
 
 export { ImageCollection };

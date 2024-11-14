@@ -1,10 +1,10 @@
 import { Slot } from "expo-router";
-import NavBar from "../../src/components/Navigation/NavBar";
+import NavBar3 from "../../src/components/Navigation/NavBar3";
 
 const App = () => {
   return (
     <div>
-      <NavBar />
+      <NavBar3 />
       <Slot />
     </div>
   );

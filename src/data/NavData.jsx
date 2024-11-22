@@ -36,7 +36,7 @@ export const navLinks = [
   {
     text: "Media",
     links: [
-      { href: "/website/blog", text: "Blog" },
+      { href: "/website/allBlogs", text: "Blog" },
       { href: "/website/gallery", text: "Gallery" },
       { href: "/website/events", text: "Events" },
     ],

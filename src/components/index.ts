@@ -17,5 +17,6 @@ export {default as Councils } from './Councils';
 export {default as History } from './History';
 export {default as GalleryPage } from './GalleryPage';
 export {default as ContactForm } from './ContactForm';
+export {default as AllBlogs } from './AllBlogs';
 
 

@@ -13,5 +13,6 @@ export {default as Footer } from './Footer';
 export {default as BottomNav } from './BottomNav';
 export {default as TopHero } from './TopHero';
 export {default as SecondNav } from './SecondNav';
+export {default as Councils } from './Councils';
 
 

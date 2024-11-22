@@ -22,9 +22,9 @@ export const navLinks = [
     text: "Secretariat",
     links: [
       { href: "/website/exec", text: "Executive Council" },
-      { href: "/website/magt", text: "Management Team" },
-      { href: "/website/leg", text: "Legislative Arm" },
-      { href: "/website/other", text: "Other Appointees" },
+      { href: "/website/exec", text: "Management Team" },
+      { href: "/website/exec", text: "Legislative Arm" },
+      { href: "/website/exec", text: "Other Appointees" },
     ],
     icon: (
       <IconChevronDown

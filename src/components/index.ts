@@ -15,5 +15,6 @@ export {default as TopHero } from './TopHero';
 export {default as SecondNav } from './SecondNav';
 export {default as Councils } from './Councils';
 export {default as History } from './History';
+export {default as GalleryPage } from './GalleryPage';
 
 

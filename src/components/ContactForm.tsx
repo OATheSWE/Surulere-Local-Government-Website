@@ -79,7 +79,7 @@ const ContactForm: React.FC = () => {
             color="green"
             radius="md"
             size="lg"
-            className="hover:bg-primary hover:text-white transition duration-300"
+            className="hover:bg-primary hover:text-white transition duration-300 mb-4"
           >
             Send it
           </Button>

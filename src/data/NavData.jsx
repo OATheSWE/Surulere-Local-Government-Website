@@ -16,7 +16,7 @@ export const dashboardLinks = [
 ];
 
 export const navLinks = [
-  { text: "Home", href: "/website/home" },
+  { text: "Home", href: "/website" },
   { text: "Departments", href: "/website/departments" },
   {
     text: "Secretariat",
@@ -38,7 +38,7 @@ export const navLinks = [
     links: [
       { href: "/website/allBlogs", text: "Blog" },
       { href: "/website/gallery", text: "Gallery" },
-      { href: "/website/events", text: "Events" },
+      // { href: "/website/events", text: "Events" },
     ],
     icon: (
       <IconChevronDown

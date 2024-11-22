@@ -5,7 +5,7 @@ import "../global.css";
 import "@mantine/dates/styles.css";
 import "@mantine/carousel/styles.css";
 import "@mantine/notifications/styles.css";
-import { Slot } from "expo-router";
+import { router, Slot } from "expo-router";
 import { Notifications } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { Splash } from "../src/views";
@@ -23,6 +23,13 @@ const App = () => {
     // Clear the timer if the component is unmounted
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    // Navigate to /website after the splash screen is hidden
+    if (!showSplash) {
+      router.replace("/website"); // Use replace to avoid keeping the splash in history
+    }
+  }, [showSplash, router]);
 
   return (
     <MantineProvider>

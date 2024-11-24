@@ -13,6 +13,7 @@ export const dashboardLinks = [
   { label: "Blogs", icon: IconArticle, link: "/admin/blogs" },
   { label: "Adverts", icon: IconSpeakerphone, link: "/admin/adverts" },
   { label: "Gallery", icon: IconPhoto, link: "/admin/gallery" },
+  { label: "Go back to site", icon: IconPhoto, link: "/website" },
 ];
 
 export const navLinks = [

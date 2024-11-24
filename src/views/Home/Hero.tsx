@@ -8,7 +8,6 @@ import { useSpring, animated } from "@react-spring/web";
 const Hero: React.FC = () => {
   const [ref, inView] = useInView({
     threshold: 0.4,
-    triggerOnce: true,
   });
 
   // Animation for the left column (coming from the left)

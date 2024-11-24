@@ -34,34 +34,26 @@ export default function CouncilManagement() {
   const confirmModalRef = useRef(null); // Confirm modal reference
   const [fileError, setFileError] = useState("");
   const [councilName, setCouncilName] = useState("");
-  const [newMember, setNewMember] = useState({
-    name: "",
-    image: null,
-    position: "",
-    phone: "",
-    linkedin: "",
-  });
+  const [members, setMembers] = useState([]); // Holds array of member objects
 
-  const addMember = () => {
-    setMembers([...members, newMember]);
-    setNewMember({
-      name: "",
-      image: null,
-      position: "",
-      phone: "",
-      linkedin: "",
-    });
+  // Add a new empty member input set
+  const handleAddMember = () => {
+    setMembers([
+      ...members,
+      { name: "", position: "", image: null, linkedin: "" },
+    ]);
   };
 
-  const updateMember = (index, updatedMember) => {
+  // Update a specific member
+  const handleMemberChange = (index, field, value) => {
     const updatedMembers = [...members];
-    updatedMembers[index] = updatedMember;
+    updatedMembers[index][field] = value;
     setMembers(updatedMembers);
   };
 
-  const deleteMember = (index) => {
-    const updatedMembers = members.filter((_, i) => i !== index);
-    setMembers(updatedMembers);
+  // Remove a specific member input set
+  const handleRemoveMember = (index) => {
+    setMembers(members.filter((_, i) => i !== index));
   };
 
   useEffect(() => {
@@ -101,47 +93,45 @@ export default function CouncilManagement() {
     }, 0);
   };
 
-  const handleAddDepartment = () => {
-    form.reset();
-    setAddModalOpen(true);
-  };
+  const handleEditCouncil = (council) => {
+    // Set the council name
+    setCouncilName(council.council_name);
 
-  const handleEditDepartment = (dept) => {
-    form.setValues({
-      department_name: dept.department_name,
-      department_text: dept.department_data.text,
-      image: dept.department_data.image, // Assuming the image is already an object; otherwise, process it accordingly
-    });
-    setSelectedCouncil(dept);
+    // Populate members array with the council data
+    setMembers(
+      council.council_data.map((member) => ({
+        name: member.name,
+        position: member.position,
+        linkedin: member.linkedin,
+        image: member.image.name, // Process image if needed (e.g., convert URLs or blobs)
+      }))
+    );
+
+    setSelectedCouncil(council);
+
+    // Open the edit modal
     setEditModalOpen(true);
   };
 
-  const handleAddSubmit = async (values) => {
+  const handleAddSubmit = async (e) => {
+    e.preventDefault();
     toggleVisibility2();
-    const departmentPayload = {
-      department_name: values.department_name,
-      department_data: JSON.stringify({
-        text: values.department_text,
-        image: values.image,
-      }),
-    };
+    const formData = new FormData();
+    formData.append("council_name", councilName);
+    formData.append("council_data", JSON.stringify(members));
 
     try {
-      const response = await axios.post(
-        api.createDepartment,
-        departmentPayload,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
+      const response = await axios.post(api.createCouncil, formData, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
 
       toggleVisibility2();
-      if (response.data.status === "success") {
+      if (response.data.status) {
         handleOpenSuccessModal(response.data.message);
         setTimeout(() => {
-          router.replace("/admin/Councils"); // Use replace instead of push for navigation
+          router.replace("/admin/councils"); // Use replace instead of push for navigation
         }, 1500);
         setAddModalOpen(false);
         form.reset();
@@ -156,33 +146,26 @@ export default function CouncilManagement() {
     }
   };
 
-  const handleEditSubmit = async (values) => {
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
     toggleVisibility2();
-    const departmentPayload = {
-      department_id: selectedDepartment.department_id,
-      department_name: values.department_name,
-      department_data: JSON.stringify({
-        text: values.department_text,
-        image: values.image,
-      }),
-    };
+    const formData = new FormData();
+    formData.append("council_id", selectedCouncil.council_id);
+    formData.append("council_name", councilName);
+    formData.append("council_data", JSON.stringify(members));
 
     try {
-      const response = await axios.post(
-        api.updateDepartment,
-        departmentPayload,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
+      const response = await axios.post(api.updateCouncil, formData, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
 
       toggleVisibility2();
       if (response.data.status === "success") {
         handleOpenSuccessModal(response.data.message);
         setTimeout(() => {
-          router.replace("/admin/Councils"); // Use replace instead of push for navigation
+          router.replace("/admin/councils"); // Use replace instead of push for navigation
         }, 1500);
         setEditModalOpen(false);
         form.reset();
@@ -197,7 +180,7 @@ export default function CouncilManagement() {
     }
   };
 
-  const handleLogoChange = (file) => {
+  const handleLogoChange = (file, index) => {
     if (file) {
       const fileType = file.type.split("/")[1];
       const fileSize = file.size / 1024; // convert to KB
@@ -214,7 +197,7 @@ export default function CouncilManagement() {
             type: file.type,
             data: reader.result.split(",")[1],
           };
-          form.setFieldValue("image", logoData);
+          handleMemberChange(index, "image", logoData);
         };
         reader.readAsDataURL(file); // Trigger file read
         setFileError("");
@@ -228,7 +211,7 @@ export default function CouncilManagement() {
     }
   };
 
-  const handleDeleteDepartment = () => {
+  const handleDeleteCouncil = () => {
     if (confirmModalRef.current) {
       confirmModalRef.current.openModal();
     }
@@ -246,7 +229,6 @@ export default function CouncilManagement() {
           },
         }
       );
-
       toggleVisibility2();
       if (response.data.status === "success") {
         handleOpenSuccessModal(response.data.message);
@@ -287,11 +269,11 @@ export default function CouncilManagement() {
       >
         <h1 className="text-center font-bold">Councils</h1>
         <Button
-          onClick={handleAddDepartment}
+          onClick={() => setAddModalOpen(true)}
           leftSection={<IconPlus />}
           className="bg-primary rounded-full border-primary border-2 hover:bg-transparent hover:text-black transition duration-300 mt-5"
         >
-          Add Department
+          Add Council
         </Button>
         <SimpleGrid
           cols={{ base: 1, sm: 2, lg: 3 }}
@@ -299,33 +281,31 @@ export default function CouncilManagement() {
           verticalSpacing={{ base: "md", sm: "xl" }}
           mt={`2rem`}
         >
-          {Councils.map((dept) => (
-            <BackgroundImage
-              key={dept.department_id}
-              className={`max-w-[300px] w-full h-[200px] border-primary border-2 hover:-translate-y-2 duration-300 transition flex flex-col justify-between p-4 rounded-lg`}
-              src={`http://localhost:8000/${encodeURIComponent(
-                dept.department_data.image.path
-              )}`}
+          {councils.map((dept) => (
+            <div
+              key={dept.council_id}
+              className={`max-w-[300px] w-full h-[200px] border-primary bg-gray-400 border-2 hover:-translate-y-2 duration-300 transition flex flex-col justify-between p-4 rounded-lg`}
+              src={``}
             >
               <div>
                 <h2 className="text-white bg-primary w-full p-1 rounded-full text-center">
-                  {dept.department_name}
+                  {dept.council_name}
                 </h2>
               </div>
               <div className="flex justify-between">
                 <IconEdit
-                  onClick={() => handleEditDepartment(dept)}
+                  onClick={() => handleEditCouncil(dept)}
                   className="cursor-pointer bg-primary h-[30px] w-[30px] p-1 rounded-full hover:bg-secondary transition duration-300"
                 />
                 <IconTrash
                   onClick={() => {
-                    setSelectedDepartment(dept);
-                    handleDeleteDepartment();
+                    setSelectedCouncil(dept);
+                    handleDeleteCouncil();
                   }}
                   className="cursor-pointer bg-primary h-[30px] w-[30px] p-1 rounded-full hover:bg-secondary transition duration-300"
                 />
               </div>
-            </BackgroundImage>
+            </div>
           ))}
         </SimpleGrid>
       </animated.div>
@@ -343,30 +323,80 @@ export default function CouncilManagement() {
           overlayProps={{ blur: 2 }}
           loaderProps={{ color: "#98CD5B", type: "bars" }}
         />
-        <form onSubmit={form.onSubmit(handleAddSubmit)}>
+        <form>
           <TextInput
+            label="Council Name"
+            placeholder="Enter council name"
+            value={councilName}
+            onChange={(e) => setCouncilName(e.target.value)}
             required
-            label="Department Name"
-            {...form.getInputProps("department_name")}
-            mb={`md`}
           />
-          <Textarea
-            label="Description"
-            {...form.getInputProps("department_text")}
-            mb={`md`}
-            minRows={4}
-            required
-            autosize
-          />
-          <FileInput
-            label="Upload Image (JPEG, PNG, JPG only)"
-            required
-            onChange={handleLogoChange}
-            error={fileError}
-            mb={`md`}
-          />
+
+          <Button
+            onClick={handleAddMember}
+            leftSection={<IconPlus />}
+            variant="outline"
+            mt="md"
+          >
+            Add Member
+          </Button>
+
+          {members.map((member, index) => (
+            <div
+              key={index}
+              className="mt-8 border border-primary p-4 rounded-md"
+            >
+              <Group grow>
+                <TextInput
+                  label="Name"
+                  value={member.name}
+                  onChange={(e) =>
+                    handleMemberChange(index, "name", e.target.value)
+                  }
+                  placeholder="Enter your name"
+                />
+                <TextInput
+                  label="Position"
+                  value={member.position}
+                  onChange={(e) =>
+                    handleMemberChange(index, "position", e.target.value)
+                  }
+                  placeholder="Enter position"
+                />
+              </Group>
+              <Group grow mt="md">
+                <FileInput
+                  label="Upload Image"
+                  accept="image/jpeg, image/png, image/jpg image/jfif"
+                  required
+                  onChange={(e) => handleLogoChange(e, index)} // Pass index along with the file
+                  error={fileError}
+                  // mb={`md`}
+                />
+                <TextInput
+                  label="LinkedIn Profile"
+                  value={member.linkedin}
+                  onChange={(e) =>
+                    handleMemberChange(index, "linkedin", e.target.value)
+                  }
+                  placeholder="Enter the URL"
+                />
+              </Group>
+              <Button
+                onClick={() => handleRemoveMember(index)}
+                leftSection={<IconTrash />}
+                fullWidth
+                mt="md"
+                className="bg-red-600 text-white transition duration-300 border-[1.5px] border-red-600 hover:bg-transparent hover:text-red-600"
+              >
+                Remove Member
+              </Button>
+            </div>
+          ))}
+
           <Button
             type="submit"
+            onClick={handleAddSubmit}
             className="bg-primary rounded-full border-primary border-2 hover:bg-transparent hover:text-black transition duration-300 mt-5 w-full"
           >
             Submit
@@ -387,31 +417,81 @@ export default function CouncilManagement() {
           overlayProps={{ blur: 2 }}
           loaderProps={{ color: "#98CD5B", type: "bars" }}
         />
-        <form onSubmit={form.onSubmit(handleEditSubmit)}>
+
+        <form>
           <TextInput
-            required
-            label="Department Name"
-            {...form.getInputProps("department_name")}
-            mb={`md`}
-          />
-          <Textarea
-            label="Description"
-            {...form.getInputProps("department_text")}
-            mb={`md`}
-            minRows={4}
-            autosize
+            label="Council Name"
+            placeholder="Enter council name"
+            value={councilName}
+            onChange={(e) => setCouncilName(e.target.value)}
             required
           />
-          <FileInput
-            label="Upload Image (JPEG, PNG, JPG only)"
-            accept="image/jpeg, image/png, image/jpg"
-            required
-            onChange={handleLogoChange}
-            error={fileError}
-            mb={`md`}
-          />
+
+          <Button
+            onClick={handleAddMember}
+            leftSection={<IconPlus />}
+            variant="outline"
+            mt="md"
+          >
+            Add Member
+          </Button>
+
+          {members.map((member, index) => (
+            <div
+              key={index}
+              className="mt-8 border border-primary p-4 rounded-md"
+            >
+              <Group grow>
+                <TextInput
+                  label="Name"
+                  value={member.name}
+                  onChange={(e) =>
+                    handleMemberChange(index, "name", e.target.value)
+                  }
+                  placeholder="Enter your name"
+                />
+                <TextInput
+                  label="Position"
+                  value={member.position}
+                  onChange={(e) =>
+                    handleMemberChange(index, "position", e.target.value)
+                  }
+                  placeholder="Enter position"
+                />
+              </Group>
+              <Group grow mt="md">
+                <FileInput
+                  label="Upload Image"
+                  accept="image/jpeg, image/png, image/jpg image/jfif"
+                  required
+                  onChange={(e) => handleLogoChange(e, index)} // Pass index along with the file
+                  error={fileError}
+                  // mb={`md`}
+                />
+                <TextInput
+                  label="LinkedIn Profile"
+                  value={member.linkedin}
+                  onChange={(e) =>
+                    handleMemberChange(index, "linkedin", e.target.value)
+                  }
+                  placeholder="Enter the URL"
+                />
+              </Group>
+              <Button
+                onClick={() => handleRemoveMember(index)}
+                leftSection={<IconTrash />}
+                fullWidth
+                mt="md"
+                className="bg-red-600 text-white transition duration-300 border-[1.5px] border-red-600 hover:bg-transparent hover:text-red-600"
+              >
+                Remove Member
+              </Button>
+            </div>
+          ))}
+
           <Button
             type="submit"
+            onClick={handleEditSubmit}
             className="bg-primary rounded-full border-primary border-2 hover:bg-transparent hover:text-black transition duration-300 mt-5 w-full"
           >
             Update

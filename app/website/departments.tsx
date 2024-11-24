@@ -7,7 +7,7 @@ const home = () => {
     <div>
       <TopHero
         headText={`Departments`}
-        subText={`Departments in Suruelre Local Government`}
+        subText={`Departments in Suruelere Local Government`}
       />
       <SecondNav />
       <About />

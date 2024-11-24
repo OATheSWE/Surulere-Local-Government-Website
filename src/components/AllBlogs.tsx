@@ -1,4 +1,4 @@
-import { Grid, Image, Text } from "@mantine/core";
+import { BackgroundImage, Grid, Image, Text } from "@mantine/core";
 import { useTrail, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
 import { galleryImages, styles } from "../data";
@@ -63,7 +63,46 @@ const AllBlogs = () => {
     }
   }
 
+  const [adverts, setAdverts] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Fetch adverts once on component mount
+  useEffect(() => {
+    const fetchAdverts = async () => {
+      try {
+        const response = await axios.get(api.fetchAllAdverts, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
+        if (response.data.status === "success") {
+          setAdverts(response.data.adverts);
+        }
+      } catch (error) {
+        console.error("Failed to fetch adverts:", error);
+      }
+    };
+
+    fetchAdverts();
+  }, []);
+
+  // Update the background image index every 5 seconds
+  useEffect(() => {
+    if (adverts.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % adverts.length);
+      }, 5000); // Change every 5 seconds
+
+      return () => clearInterval(interval); // Cleanup
+    }
+  }, [adverts]);
+
+  // Safely extract the current image path
+  const currentBackgroundImage =
+    adverts[currentImageIndex]?.advert_data?.file_path;
+
   const allImages = trail.map((style, index) => (
+    <>
     <Grid.Col ref={ref} span={{ base: 12, xs: 6, sm: 4, md: 3 }} key={index} className="mt-8">
       <animated.div style={style} className={`w-full h-[250px] overflow-hidden rounded-xl`} onClick={() => {router.push(`/website/blog?blog_id=${blogs[index].blog_id}`)}}>
         <Image
@@ -76,6 +115,8 @@ const AllBlogs = () => {
         <Text className="text-[13px]">By {blogs[index].blog_data.blog_author}, <span>{formatRelativeTime(blogs[index].created_at)}</span></Text>
       </animated.div>
     </Grid.Col>
+    <BackgroundImage className={`w-full h-[300px] rounded-lg`} src={currentBackgroundImage} />
+    </>
   ));
   return <Grid  className={`${styles.body} py-16`}>{allImages}</Grid>;
 };

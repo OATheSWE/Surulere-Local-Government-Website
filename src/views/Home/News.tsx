@@ -22,7 +22,7 @@ const NewsCard: React.FC<{
     className="w-full max-w-[300px] h-auto"
   >
     <Image
-      src={`http://localhost:8000/${imageUrl}`}
+      src={imageUrl}
       alt={title}
       className="h-48 w-full object-cover rounded-t-md"
     />

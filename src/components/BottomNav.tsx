@@ -8,9 +8,9 @@ const BottomNav: React.FC = () => {
       {/* Address Section */}
       <div className="space-y-2">
         <h2 className="font-bold text-lg">Surulere</h2>
-        <p>Town Planning Way, Ilupeju, Lagos<br />Nigeria</p>
-        <p>Phone: +2347031290343</p>
-        <p>Email: <a href="mailto:info@odiolowoojuwoye.lg.gov.ng" className="text-primary hover:underline">info@odiolowoojuwoye.lg.gov.ng</a></p>
+        <p>1 Olaogun Dickson avenue off Alhaji Masha road, Onilegogoro, Surulere.</p>
+        <p>Phone: +234 807 539 5649</p>
+        <p>Email: <a href="mailto:info@odiolowoojuwoye.lg.gov.ng" className="text-primary hover:underline">localgovernmentsurulere@gmail.com</a></p>
       </div>
 
       {/* Quick Links Section */}
@@ -36,7 +36,7 @@ const BottomNav: React.FC = () => {
       <div className="space-y-2 max-w-[250px] w-full">
         <h2 className="font-bold text-lg">Latest News</h2>
         <p>
-          Click <Link href="/website/blog" className="text-primary hover:underline text-[15px]">here</Link> to visit our blog for the latest news about Surulere Local Government
+          Click <Link href="/website/allBlogs" className="text-primary hover:underline text-[15px]">here</Link> to visit our blog for the latest news about Surulere Local Government
         </p>
       </div>
     </footer>

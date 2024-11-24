@@ -1,18 +1,37 @@
 import React from "react";
 import { BackgroundImage, Overlay, TextInput, Button } from "@mantine/core";
 import { ImageCollection } from "@/assets";
+import { useSpring, animated } from "@react-spring/web";
+import { useInView } from "react-intersection-observer";
 
 const SubscriptionForm: React.FC = () => {
+  const [ref, inView] = useInView({
+    threshold: 0.4,
+    triggerOnce: true,
+  });
+
+  // Animation for the left column (coming from the left)
+  const leftColAnimation = useSpring({
+    opacity: inView ? 1 : 0,
+    transform: inView ? "translateY(0)" : "translateY(50%)",
+    filter: inView ? "blur(0)" : "blur(4px)",
+    config: { mass: 1, tension: 80, friction: 26 },
+  });
+
   return (
     <BackgroundImage
       src={ImageCollection.subform} // Replace with your actual image path
       className="p-10 md:p-16 relative z-10"
+      ref={ref}
     >
       {/* Overlay to darken the background */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       {/* Content Wrapper */}
-      <div className="relative z-10 text-center">
+      <animated.div
+        className="relative z-10 text-center"
+        style={leftColAnimation}
+      >
         <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">
           Stay informed
         </h1>
@@ -39,7 +58,7 @@ const SubscriptionForm: React.FC = () => {
           </a>{" "}
           page to be able to select notifications for specific categories.
         </p>
-      </div>
+      </animated.div>
     </BackgroundImage>
   );
 };

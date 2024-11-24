@@ -9,7 +9,9 @@ use PHPMailer\PHPMailer\Exception;
 $data = json_decode($_POST['data'], true); // Assuming the JSON is in a key named 'data'
 
 if (!$data) {
-    die('Invalid JSON data');
+    // Return an error response as JSON
+    echo json_encode(['status' => 'error', 'message' => 'Invalid JSON data']);
+    exit;
 }
 
 // Extract keys from the decoded JSON
@@ -29,10 +31,14 @@ if ($image && isset($image['data'], $image['size'], $image['type'], $image['name
         $imageAttachmentPath = __DIR__ . '/attachments/' . $image['name'];
         file_put_contents($imageAttachmentPath, $imageData);
     } else {
-        die('Invalid image data');
+        // Return an error response for invalid image data
+        echo json_encode(['status' => 'error', 'message' => 'Invalid image data']);
+        exit;
     }
 } else if ($image) {
-    die('Incomplete image data');
+    // Return an error response for incomplete image data
+    echo json_encode(['status' => 'error', 'message' => 'Incomplete image data']);
+    exit;
 }
 
 // Prepare the email content
@@ -68,7 +74,7 @@ $body = <<<EOD
 </html>
 EOD;
 
-// Send Email
+// Send Email function with response handling
 function sendEmail($recipient, $subject, $body, $attachmentPath = null) {
     $mail = new PHPMailer(true);
 
@@ -85,7 +91,7 @@ function sendEmail($recipient, $subject, $body, $attachmentPath = null) {
 
         // Recipients
         $mail->setFrom($recipient, 'Contact Form');
-        $mail->addAddress("osborneosas12@gmail.com");
+        $mail->addAddress("localgovernmentsurulere@gmail.com");
 
         // Attachments
         if ($attachmentPath) {
@@ -99,12 +105,16 @@ function sendEmail($recipient, $subject, $body, $attachmentPath = null) {
         $mail->AltBody = strip_tags($body);
 
         $mail->send();
-        echo 'Message has been sent';
+        
+        // Return success response as JSON
+        echo json_encode(['status' => 'success', 'message' => 'Message has been sent']);
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        // Return error response as JSON if email fails to send
+        echo json_encode(['status' => 'error', 'message' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"]);
     }
 }
 
 // Call the sendEmail function
 sendEmail($email, 'New Contact Form Submission', $body, $imageAttachmentPath);
+
 ?>

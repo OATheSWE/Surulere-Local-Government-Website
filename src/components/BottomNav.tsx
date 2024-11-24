@@ -10,7 +10,7 @@ const BottomNav: React.FC = () => {
         <h2 className="font-bold text-lg">Surulere</h2>
         <p>1 Olaogun Dickson avenue off Alhaji Masha road, Onilegogoro, Surulere.</p>
         <p>Phone: +234 807 539 5649</p>
-        <p>Email: <a href="mailto:info@odiolowoojuwoye.lg.gov.ng" className="text-primary hover:underline">localgovernmentsurulere@gmail.com</a></p>
+        <p>Email: <a href="mailto:localgovernmentsurulere@gmail.com" className="text-primary hover:underline">localgovernmentsurulere@gmail.com</a></p>
       </div>
 
       {/* Quick Links Section */}

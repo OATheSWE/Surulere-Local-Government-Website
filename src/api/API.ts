@@ -22,6 +22,7 @@ const fetchAllCouncils = `${apiUrl}/fetchAllCouncils.php`;
 const createCouncil = `${apiUrl}/createCouncil.php`;
 const updateCouncil = `${apiUrl}/updateCouncil.php`;
 const deleteCouncil = `${apiUrl}/deleteCouncil.php`;
+const sendEmail = `${apiUrl}/sendEmail.php`;
 
 
 
@@ -47,6 +48,7 @@ const api = {
     createCouncil,
     updateCouncil,
     deleteCouncil,
+    sendEmail,
 }
 
 export { api };

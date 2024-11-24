@@ -1,22 +1,7 @@
 import React from "react";
 import { styles } from "../data";
 
-const links = [
-  "Link 1",
-  "Link 2",
-  "Link 3",
-  "Link 4",
-  "Link 5",
-  "Link 6",
-  "Link 7",
-  "Link 8",
-  "Link 9",
-  "Link 10",
-  "Link 11",
-  "Link 12",
-];
-
-const SecondNav: React.FC = () => {
+const SecondNav: React.FC = ({ departments, onDepartmentClick }) => {
   // Function to handle the drag-to-scroll behavior
   const handleDragScroll = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.currentTarget;
@@ -47,16 +32,20 @@ const SecondNav: React.FC = () => {
     <div
       className={`bg-white ${styles.body} py-3 border-y-[1.5px] border-primary flex items-center justify-between overflow-x-auto whitespace-nowrap`}
       onMouseDown={handleDragScroll}
-      style={{ cursor: "grab", scrollbarWidth: "none", msOverflowStyle: "none" }}
+      style={{
+        cursor: "grab",
+        scrollbarWidth: "none",
+        msOverflowStyle: "none",
+      }}
     >
-      {links.map((link, index) => (
-        <a
-          key={index}
-          href="#"
+      {departments.map((department) => (
+        <p
+          key={department.department_id || department.council_id}
           className="text-primary hover:underline mx-3 transition duration-300"
+          onClick={() => onDepartmentClick(department.department_id || department.council_id)} // Trigger department click
         >
-          {link}
-        </a>
+          {department.department_name || department.council_name}
+        </p>
       ))}
     </div>
   );

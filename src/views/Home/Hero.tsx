@@ -2,17 +2,33 @@
 import React from "react";
 import { Container, Text, Grid, Button, BackgroundImage } from "@mantine/core";
 import { ImageCollection } from "@/assets";
+import { useInView } from "react-intersection-observer";
+import { useSpring, animated } from "@react-spring/web";
 
 const Hero: React.FC = () => {
+  const [ref, inView] = useInView({
+    threshold: 0.4,
+    triggerOnce: true,
+  });
+
+  // Animation for the left column (coming from the left)
+  const leftColAnimation = useSpring({
+    opacity: inView ? 1 : 0,
+    transform: inView ? "translateY(0)" : "translateY(50%)",
+    filter: inView ? "blur(0)" : "blur(4px)",
+    config: { mass: 1, tension: 80, friction: 26 },
+  });
+
   return (
     <BackgroundImage
       src={ImageCollection.subform}
       className="relative p-6 h-screen flex justify-center items-center"
+      ref={ref}
     >
       {/* Overlay to darken the background */}
       <div className="absolute inset-0 bg-black opacity-20"></div>
       {/* Main Content */}
-      <div className="relative z-10 text-center">
+      <animated.div className="relative z-10 text-center" style={leftColAnimation}>
         <Text
           size="xl"
           className="mt-6 text-5xl font-bold text-center text-primary"
@@ -52,7 +68,7 @@ const Hero: React.FC = () => {
             </Grid.Col>
           ))}
         </Grid> */}
-      </div>
+      </animated.div>
     </BackgroundImage>
   );
 };

@@ -3,39 +3,44 @@ import { Card, Text, Image, Button, BackgroundImage } from "@mantine/core";
 import { ImageCollection } from "@/assets";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { useSwipeable } from "react-swipeable";
+import { useSpring, animated } from "@react-spring/web";
+import { useInView } from "react-intersection-observer";
+import axios from "axios";
+import { api } from "@/src/api";
+import { Link } from "expo-router";
 
 const NewsCard: React.FC<{
   title: string;
   description: string;
   imageUrl: string;
-}> = ({ title, description, imageUrl }) => (
+  blogId: string;
+}> = ({ title, description, imageUrl, blogId }) => (
   <Card
     shadow="xl"
     padding={0}
     radius="md"
-    className="w-full max-w-xs h-[400px]"
+    className="w-full max-w-[300px] h-auto"
   >
     <Image
-      src={imageUrl}
+      src={`http://localhost:8000/${imageUrl}`}
       alt={title}
       className="h-48 w-full object-cover rounded-t-md"
     />
     <div className="bg-gradient-to-b from-primary to-white rounded-b-md text-center text-black">
       <Text className="text-lg font-bold px-4 mt-4">{title}</Text>
-      <Text className="text-sm px-4 mt-2">{description}</Text>
-      <Button
+      <Text className="text-sm px-4 mt-2">By {description}</Text>
+      <Link
         className="bg-transparent hover:bg-transparent text-right underline transition duration-300 text-black hover:text-primary flex justify-end mt-2"
-        component="a"
-        href="#"
+        href={`/website/blog?blog_id=${blogId}`}
       >
         Read More
-      </Button>
+      </Link>
     </div>
   </Card>
 );
 
 const NewsCarousel: React.FC = () => {
-  const dummyData = [
+  const blo = [
     {
       title:
         "Aguda Surulere cult clash: Riot for Surulere Lagos - Wetin we know",
@@ -68,6 +73,7 @@ const NewsCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(1);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -90,13 +96,13 @@ const NewsCarousel: React.FC = () => {
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === dummyData.length - itemsPerPage ? 0 : prevIndex + 1
+      prevIndex === blo.length - itemsPerPage ? 0 : prevIndex + 1
     );
   };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? dummyData.length - itemsPerPage : prevIndex - 1
+      prevIndex === 0 ? blo.length - itemsPerPage : prevIndex - 1
     );
   };
 
@@ -106,35 +112,79 @@ const NewsCarousel: React.FC = () => {
     trackMouse: isSmallScreen, // Enable dragging with mouse on small screens
   });
 
+  const [ref, inView] = useInView({
+    threshold: 0.4,
+    triggerOnce: true,
+  });
+
+  // Animation for the left column (coming from the left)
+  const leftColAnimation = useSpring({
+    opacity: inView ? 1 : 0,
+    transform: inView ? "translateY(0)" : "translateY(50%)",
+    filter: inView ? "blur(0)" : "blur(4px)",
+    config: { mass: 1, tension: 80, friction: 26 },
+  });
+
+  // Animation for the right column (coming from the right)
+  const rightColAnimation = useSpring({
+    opacity: inView ? 1 : 0,
+    transform: inView ? "translateY(0)" : "translateY(50%)",
+    filter: inView ? "blur(0)" : "blur(4px)",
+    config: { mass: 1, tension: 80, friction: 26 },
+  });
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  const fetchBlogs = async () => {
+    try {
+      const response = await axios.get(api.fetchAllBlogs, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      if (response.data.status === "success") {
+        setBlogs(response.data.blogs);
+      }
+    } catch (error) {
+      console.error("Failed to fetch blogs:", error);
+    }
+  };
+
   return (
-    <BackgroundImage src={ImageCollection.bgdesign} className="py-16 bg-white">
-      <Text className="text-center mb-6 text-3xl">News & Notices</Text>
-      <div
+    <BackgroundImage ref={ref} src={ImageCollection.bgdesign} className="py-16 bg-white">
+      <animated.div style={leftColAnimation}>
+        <Text className="text-center mb-6 text-3xl">News & Notices</Text>
+      </animated.div>
+      <animated.div
         {...handlers}
-        className="flex items-center justify-center overflow-hidden"
+        className="flex justify-between overflow-hidden"
+        style={rightColAnimation}
       >
         {!isSmallScreen && (
           <button onClick={prevSlide} className="mr-4 hidden md:block">
             <IconArrowLeft size={30} />
           </button>
         )}
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden w-full">
           <div
             className="flex transition-transform ease-in-out duration-500"
             style={{
               transform: `translateX(-${(currentIndex / itemsPerPage) * 100}%)`,
-              width: `${(100 * dummyData.length) / itemsPerPage}%`,
+              width: `${(100 * blo.length) / itemsPerPage}%`,
             }}
           >
-            {dummyData.map((newsItem, index) => (
+            {blogs.map((newsItem, index) => (
               <div
                 key={index}
                 className={`w-[${100 / itemsPerPage}%] flex-shrink-0 px-2`}
               >
                 <NewsCard
-                  title={newsItem.title}
-                  description={newsItem.description}
-                  imageUrl={newsItem.imageUrl}
+                  title={newsItem.blog_data?.blog_title}
+                  description={newsItem.blog_data?.blog_author}
+                  imageUrl={newsItem.blog_data.image?.file_path}
+                  blogId={newsItem.blog_id}
                 />
               </div>
             ))}
@@ -145,7 +195,7 @@ const NewsCarousel: React.FC = () => {
             <IconArrowRight size={30} />
           </button>
         )}
-      </div>
+      </animated.div>
     </BackgroundImage>
   );
 };

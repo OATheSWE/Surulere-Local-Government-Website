@@ -92,7 +92,7 @@ const ExecCouncil: React.FC = ({ councilData }) => {
               {/* Member Image */}
               {member.image && (
                 <Image
-                  src={`http://localhost:8000/${member.image.path}`}
+                  src={member.image.path}
                   radius="50%"
                   className="lg:ml-4 w-[120px] h-[120px]"
                 />

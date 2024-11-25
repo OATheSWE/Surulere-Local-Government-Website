@@ -273,7 +273,7 @@ export default function Blogs() {
             <div key={blog.blog_id}>
             <BackgroundImage
               className={`max-w-[300px] w-full h-[200px] border-primary border-2 hover:-translate-y-2 duration-300 transition flex flex-col justify-between p-4 rounded-lg`}
-              src={`http://localhost:8000/${encodeURIComponent(
+              src={`${encodeURIComponent(
                 blog.blog_data.image.file_path
               )}`}
             >

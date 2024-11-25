@@ -1,28 +1,28 @@
 
 const apiUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
 
-const login = `${apiUrl}/login.php`;
-const fetchAllDepartments = `${apiUrl}/fetchAllDepartments.php`;
-const createDepartment = `${apiUrl}/createDepartment.php`;
-const updateDepartment = `${apiUrl}/updateDepartment.php`;
-const deleteDepartment = `${apiUrl}/deleteDepartment.php`;
-const fetchAllBlogs = `${apiUrl}/fetchAllBlogs.php`;
-const createBlog = `${apiUrl}/createBlog.php`;
-const updateBlog = `${apiUrl}/updateBlog.php`;
-const deleteBlog = `${apiUrl}/deleteBlog.php`;
-const fetchAllAdverts = `${apiUrl}/fetchAllAdverts.php`;
-const createAdvert = `${apiUrl}/createAdvert.php`;
-const updateAdvert = `${apiUrl}/updateAdvert.php`;
-const deleteAdvert = `${apiUrl}/deleteAdvert.php`;
-const fetchAllGallery = `${apiUrl}/fetchAllGallery.php`;
-const createGallery = `${apiUrl}/createGallery.php`;
-const updateGallery = `${apiUrl}/updateGallery.php`;
-const deleteGallery = `${apiUrl}/deleteGallery.php`;
-const fetchAllCouncils = `${apiUrl}/fetchAllCouncils.php`;
-const createCouncil = `${apiUrl}/createCouncil.php`;
-const updateCouncil = `${apiUrl}/updateCouncil.php`;
-const deleteCouncil = `${apiUrl}/deleteCouncil.php`;
-const sendEmail = `${apiUrl}/sendEmail.php`;
+const login = `php/login.php`;
+const fetchAllDepartments = `php/fetchAllDepartments.php`;
+const createDepartment = `php/createDepartment.php`;
+const updateDepartment = `php/updateDepartment.php`;
+const deleteDepartment = `php/deleteDepartment.php`;
+const fetchAllBlogs = `php/fetchAllBlogs.php`;
+const createBlog = `php/createBlog.php`;
+const updateBlog = `php/updateBlog.php`;
+const deleteBlog = `php/deleteBlog.php`;
+const fetchAllAdverts = `php/fetchAllAdverts.php`;
+const createAdvert = `php/createAdvert.php`;
+const updateAdvert = `php/updateAdvert.php`;
+const deleteAdvert = `php/deleteAdvert.php`;
+const fetchAllGallery = `php/fetchAllGallery.php`;
+const createGallery = `php/createGallery.php`;
+const updateGallery = `php/updateGallery.php`;
+const deleteGallery = `php/deleteGallery.php`;
+const fetchAllCouncils = `php/fetchAllCouncils.php`;
+const createCouncil = `php/createCouncil.php`;
+const updateCouncil = `php/updateCouncil.php`;
+const deleteCouncil = `php/deleteCouncil.php`;
+const sendEmail = `php/sendEmail.php`;
 
 
 

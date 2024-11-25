@@ -24,12 +24,12 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // useEffect(() => {
-  //   // Navigate to /website after the splash screen is hidden
-  //   if (!showSplash) {
-  //     router.replace("/website"); // Use replace to avoid keeping the splash in history
-  //   }
-  // }, [showSplash, router]);
+  useEffect(() => {
+    // Navigate to /website after the splash screen is hidden
+    if (!showSplash) {
+      router.replace("/website"); // Use replace to avoid keeping the splash in history
+    }
+  }, [showSplash, router]);
 
   return (
     <MantineProvider>

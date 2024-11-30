@@ -2,7 +2,11 @@
 import { Asset } from 'expo-asset';
 
 // @ts-ignore
-const logo = Asset.fromModule(require('./logo.png')).uri;
+const logo = Asset.fromModule(require('./logo.jpeg')).uri;
+const slider1 = Asset.fromModule(require('./slider1.jpeg')).uri;
+const slider2 = Asset.fromModule(require('./slider2.jpeg')).uri;
+const slider3 = Asset.fromModule(require('./slider3.jpeg')).uri;
+const slider4 = Asset.fromModule(require('./slider4.jpeg')).uri;
 const hero = Asset.fromModule(require('./hero.png')).uri;
 const topImage = Asset.fromModule(require('./image.png')).uri;
 const subform = Asset.fromModule(require('./subform.png')).uri;
@@ -27,7 +31,11 @@ const ImageCollection = {
    wave1,
    wave2,
    bg,
-   hero
+   hero,
+   slider1,
+   slider2,
+   slider3,
+   slider4,
 }
 
 export { ImageCollection };

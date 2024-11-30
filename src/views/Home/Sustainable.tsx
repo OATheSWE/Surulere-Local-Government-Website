@@ -11,6 +11,7 @@ import {
 import { ImageCollection } from "@/assets";
 import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
+import { styles } from "@/src/data";
 
 const SustainabilityCard: React.FC<{
   description: string;
@@ -64,18 +65,18 @@ const SustainableProgress: React.FC = () => {
     <BackgroundImage
       ref={ref}
       src={ImageCollection.sustain}
-      className=" relative z-10"
+      className={`relative z-10 ${styles.body}`}
     >
       {/* <Overlay color="#2e7d32" opacity={0.7} zIndex={1} /> */}
       <div className="absolute inset-0 bg-[#819965D9] opacity-50"></div>
 
-      <div className="relative z-10 py-10 text-center text-black px-10">
+      <div className="relative z-10 py-10 text-center text-black">
         <animated.div style={leftColAnimation}>
           <Text className="text-3xl font-bold mb-4 text-center">
             Our Progress Towards a Sustainable Future
           </Text>
         </animated.div>
-        <div className="flex lg:justify-between justify-center items-center max-lg:flex-col">
+        <div className="flex lg:justify-between space-x-3 justify-center items-center max-lg:flex-col">
           <animated.div style={rightColAnimation}>
             <Text className="max-w-[350px] w-full text-lg font-semibold text-center max-lg:mb-6">
               Surulere Local Government is dedicated to creating a sustainable,

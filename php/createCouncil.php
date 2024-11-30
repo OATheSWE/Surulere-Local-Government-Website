@@ -54,12 +54,12 @@ foreach ($council_data as &$data) {
     }
 }
 
-// // Generate an 8-character council ID
-// $council_id = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 8);
+// Generate a numeric council_id (8-digit random number)
+$council_id = rand(10000000, 99999999);
 
 // Insert the new council into the councils table
-$query = "INSERT INTO councils (council_name, council_data) VALUES ($1, $2)";
-$result = pg_query_params($connection, $query, [$council_name, json_encode($council_data)]);
+$query = "INSERT INTO councils (council_id, council_name, council_data) VALUES ($1, $2, $3)";
+$result = pg_query_params($connection, $query, [$council_id, $council_name, json_encode($council_data)]);
 
 if (!$result) {
     echo json_encode([

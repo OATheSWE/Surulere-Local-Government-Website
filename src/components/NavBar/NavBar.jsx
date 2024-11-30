@@ -131,7 +131,7 @@ export default function NavBar() {
       <Link
         key={index}
         href={link.href || "#"}
-        className={`font-sans ${classes.link} relative group`}
+        className={`font-sans ${classes.link} flex justify-between relative group`}
         onClick={closeDrawer}
       >
         {link.text}
@@ -143,7 +143,7 @@ export default function NavBar() {
   return (
     <Box className="relative z-[10]">
       <header
-        className={`flex lg:justify-center justify-end items-center font-sans bg-white ${classes.header} ${styles.body}`}
+        className={`flex max-lg:justify-end lg:justify-center  items-center font-sans bg-white ${classes.header} ${styles.body}`}
       >
         <Group h="100%" gap={0} className="hidden lg:flex">
           {items}

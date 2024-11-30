@@ -63,10 +63,8 @@ const AllBlogs = () => {
     }
   }
 
-  const [adverts, setAdverts] = useState([]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [advert, setAdvert] = useState();
 
-  // Fetch adverts once on component mount
   useEffect(() => {
     const fetchAdverts = async () => {
       try {
@@ -75,8 +73,15 @@ const AllBlogs = () => {
             "Content-Type": "application/x-www-form-urlencoded",
           },
         });
+
         if (response.data.status === "success") {
-          setAdverts(response.data.adverts);
+          const allAdverts = response.data.adverts;
+
+          // Randomly select one advert
+          if (allAdverts.length > 0) {
+            const randomIndex = Math.floor(Math.random() * allAdverts.length);
+            setAdvert(allAdverts[randomIndex]);
+          }
         }
       } catch (error) {
         console.error("Failed to fetch adverts:", error);
@@ -86,27 +91,15 @@ const AllBlogs = () => {
     fetchAdverts();
   }, []);
 
-  // Update the background image index every 5 seconds
-  useEffect(() => {
-    if (adverts.length > 0) {
-      const interval = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % adverts.length);
-      }, 5000); // Change every 5 seconds
 
-      return () => clearInterval(interval); // Cleanup
-    }
-  }, [adverts]);
-
-  // Safely extract the current image path
-  const currentBackgroundImage =
-    adverts[currentImageIndex]?.advert_data?.file_path;
+  
 
   const allImages = trail.map((style, index) => (
     <>
     <Grid.Col ref={ref} span={{ base: 12, xs: 6, sm: 4, md: 3 }} key={index} className="mt-8">
       <animated.div style={style} className={`w-full h-[250px] overflow-hidden rounded-xl`} onClick={() => {router.push(`/website/blog?blog_id=${blogs[index].blog_id}`)}}>
         <Image
-          src={blogs[index].blog_data.image.file_path}
+          src={`${encodeURIComponent(blogs[index].blog_data.image.file_path)}`}
           className={`w-full h-[150px] object-cover object-top rounded-xl transition duration-300 shadow-xl`}
           alt="Gallery Image"
           loading="lazy"
@@ -115,7 +108,7 @@ const AllBlogs = () => {
         <Text className="text-[13px]">By {blogs[index].blog_data.blog_author}, <span>{formatRelativeTime(blogs[index].created_at)}</span></Text>
       </animated.div>
     </Grid.Col>
-    <BackgroundImage className={`w-full h-[300px] rounded-lg`} src={currentBackgroundImage} />
+    <BackgroundImage className={`w-full h-[250px] rounded-lg`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
     </>
   ));
   return <Grid  className={`${styles.body} py-16`}>{allImages}</Grid>;

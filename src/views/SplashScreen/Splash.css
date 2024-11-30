@@ -1,0 +1,53 @@
+/* Define the keyframes for the typing animation */
+@keyframes typewriter {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  /* Apply the typing effect */
+  .typewriter {
+    overflow: hidden; /* Hide the text that is not yet revealed */
+    border-right: 0.15em solid #fff; /* Simulates the cursor */
+    white-space: nowrap; /* Ensure the text stays in a single line */
+    animation: typewriter 4s steps(30) 1s forwards, blink 0.75s step-end infinite; /* Animation duration and steps */
+  }
+  
+  /* Cursor blink effect */
+  @keyframes blink {
+    50% {
+      border-color: transparent;
+    }
+  }
+  
+  /* Define the gradient animation */
+  @keyframes gradientColor {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Apply the gradient color effect */
+  .radiant {
+    background: linear-gradient(
+      90deg,
+      #a8e063, /* Soft light green */
+      #ffffff, /* White */
+      #c5e5b7, /* Light pastel green */
+      #d3f7c1 /* Pale greenish white */
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientColor 5s infinite, typewriter 4s steps(30) 1s forwards; /* Combine both animations */
+  }
+  

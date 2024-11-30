@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { TextInput, Textarea, FileInput, Button, LoadingOverlay } from "@mantine/core";
+import React, { useEffect, useRef, useState } from "react";
+import { TextInput, Textarea, FileInput, Button, LoadingOverlay, BackgroundImage } from "@mantine/core";
 import { styles } from "../data";
 import { useForm } from "@mantine/form";
 import axios from "axios";
@@ -102,6 +102,35 @@ const ContactForm: React.FC = () => {
     }
   };
 
+  const [advert, setAdvert] = useState();
+
+  useEffect(() => {
+    const fetchAdverts = async () => {
+      try {
+        const response = await axios.get(api.fetchAllAdverts, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
+
+        if (response.data.status === "success") {
+          const allAdverts = response.data.adverts;
+
+          // Randomly select one advert
+          if (allAdverts.length > 0) {
+            const randomIndex = Math.floor(Math.random() * allAdverts.length);
+            setAdvert(allAdverts[randomIndex]);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch adverts:", error);
+      }
+    };
+
+    fetchAdverts();
+  }, []);
+
+
   return (
     <div className={`bg-white flex flex-col items-center ${styles.body}`}>
       <LoadingOverlay
@@ -193,6 +222,7 @@ const ContactForm: React.FC = () => {
         </div>
       </form>
       <SuccessModal ref={successModalRef} text={modalText} />
+      <BackgroundImage className={`w-full h-[250px] rounded-lg`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
     </div>
   );
 };

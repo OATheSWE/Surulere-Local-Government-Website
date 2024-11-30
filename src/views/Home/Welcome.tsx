@@ -3,6 +3,7 @@ import { Image, Text } from "@mantine/core";
 import { ImageCollection } from "@/assets";
 import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
+import { styles } from "@/src/data";
 
 const WelcomeToSurulere: React.FC = () => {
   const [ref, inView] = useInView({
@@ -49,13 +50,13 @@ const WelcomeToSurulere: React.FC = () => {
         alt="Vector 2"
         className="w-full absolute -top-7 md:-top-[60px] lg:-top-[80px]"
       />
-      <div className="bg-primary p-8 md:p-16 lg:px-32 relative overflow-hidden">
+      <div className="bg-primary py-8 md:py-16 relative overflow-hidden">
         {/* Decorative Shapes */}
         <div className="absolute top-0 left-0 w-[350px] h-[350px] md:w-[450px] md:h-[450px] rounded-full bg-[#90c462] opacity-50 transform -translate-x-10 -translate-y-10"></div>
         <div className="absolute bottom-0 right-0  w-[350px] h-[350px] md:w-[450px] md:h-[450px] rounded-full bg-[#90c462] opacity-50 transform translate-x-10 translate-y-10"></div>
 
         {/* Content */}
-        <div className="relative z-10">
+        <div className={`relative z-10 ${styles.body}`}>
           <animated.div style={leftColAnimation}>
             <Text className="text-2xl md:text-4xl font-semibold mb-4 text-center">
               WELCOME TO SURULERE
@@ -64,34 +65,35 @@ const WelcomeToSurulere: React.FC = () => {
           </animated.div>
 
           <animated.div style={rightColAnimation}>
-            <Text className="text-justify text-lg italic mb-4">
-              <span className="font-semibold">Surulere</span> (Yoruba word
-              meaning
-              <span className="font-semibold"> “Patience is Profitable”</span>),
-              a vibrant district in Lagos, Nigeria, has a rich history dating
-              back to the colonial era. Originally a residential area for
-              European expatriates, Surulere has evolved into a bustling
-              commercial and cultural hub.
+            <Text className="text-justify text-lg mb-4">
+              With love and the spirit of hospitality I welcome you into the
+              central part of Lagos state, a city of diversity yet tranquility,
+              Surulere The New Lagos, this city was carefully carved out to
+              become a habitable and thriving community, situated at the centre
+              it attained a cosmopolitan identity of people from different
+              tribes to live communally as one family.
             </Text>
           </animated.div>
 
           <animated.div style={rightColAnimation2}>
             <Text className="text-justify text-lg mb-4 leading-relaxed">
-              In the early 20th century, Surulere witnessed rapid urbanization
-              and population growth, attracting people from various parts of
-              Nigeria seeking better opportunities. This influx of residents
-              from different ethnic and religious backgrounds contributed to
-              Surulere's diverse and vibrant culture.
+              It has always lived to its expectations with a serene and urban
+              landscape, the only local government in Nigeria with two FIFA
+              recognized stadia, an Entertainment hub birthing the Nollywood
+              industry of Nigeria, a sociable environment known for its buzzing
+              night life and an economical friendly environment, little wonder
+              it is home to the first indigenous brewing company; The Nigerian
+              Breweries and others like flour mills of Nigeria, Dufil Prima
+              foods Plc; makers of Indomie noodles, BAGCO Bag company and many
+              more vibrant companies in Surulere.
             </Text>
           </animated.div>
 
           <animated.div style={rightColAnimation3}>
             <Text className="text-justify text-lg leading-relaxed">
-              Despite its modern development, Surulere has retained some of its
-              historical charm. The district's grand colonial-style buildings,
-              wide avenues, and lush green spaces offer a glimpse into its past.
-              Today, Surulere remains a dynamic and exciting place to live and
-              visit.
+              Enjoy the atmosphere and the Eco friendly neighborhoods, with open
+              arms we receive you and implore you to be law abiding as you
+              experience a city of love, peace and opportunities.
             </Text>
           </animated.div>
         </div>

@@ -3,6 +3,7 @@ import { BackgroundImage, Overlay, TextInput, Button } from "@mantine/core";
 import { ImageCollection } from "@/assets";
 import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
+import { styles } from "@/src/data";
 
 const SubscriptionForm: React.FC = () => {
   const [ref, inView] = useInView({
@@ -21,7 +22,7 @@ const SubscriptionForm: React.FC = () => {
   return (
     <BackgroundImage
       src={ImageCollection.subform} // Replace with your actual image path
-      className="p-10 md:p-16 relative z-10"
+      className={`py-10 md:py-16 relative z-10 ${styles.body}`}
       ref={ref}
     >
       {/* Overlay to darken the background */}

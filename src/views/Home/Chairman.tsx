@@ -3,6 +3,7 @@ import { Card, Text, Image } from "@mantine/core";
 import { ImageCollection } from "@/assets";
 import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
+import { styles } from "@/src/data";
 
 const MeetOurChairman: React.FC = () => {
   const [ref, inView] = useInView({
@@ -37,7 +38,7 @@ const MeetOurChairman: React.FC = () => {
   return (
     <div
       ref={ref}
-      className="bg-gradient-to-r from-[#9bc48b] to-[#d0ddd0] p-8 py-16 flex flex-col lg:flex-row items-center justify-center"
+      className={`${styles.body} bg-gradient-to-r from-[#9bc48b] to-[#d0ddd0] py-16 flex flex-col lg:flex-row items-center justify-center`}
     >
       {/* Text Section */}
       <div className="lg:w-1/2 mb-8 lg:mb-0 lg:pr-8">
@@ -69,7 +70,7 @@ const MeetOurChairman: React.FC = () => {
         />
         <Card className="bg-[#9bc48b] mt-4 text-center rounded-lg shadow-lg p-2 w-full absolute -bottom-3 max-w-[360px] -left-5">
           <Text className="font-semibold">
-            Honorable Bamidele Sulieman Yusuf
+            Honorable BAMIDELE SULAIMAN YUSUF
           </Text>
           <Text className="text-sm">Chairman, Surulere Local Government</Text>
         </Card>

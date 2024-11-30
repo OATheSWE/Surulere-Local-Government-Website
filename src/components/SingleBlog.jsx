@@ -1,4 +1,4 @@
-import { Title, Text, Grid, Image } from "@mantine/core";
+import { Title, Text, Grid, Image, BackgroundImage } from "@mantine/core";
 import { useInView } from "react-intersection-observer";
 import { useSpring, animated } from "@react-spring/web";
 import { styles } from "../data";
@@ -81,6 +81,34 @@ export default function SingleBlog() {
     return <div>Loading...</div>; // Show loading state until the selected blog is found
   }
 
+  const [advert, setAdvert] = useState();
+
+  useEffect(() => {
+    const fetchAdverts = async () => {
+      try {
+        const response = await axios.get(api.fetchAllAdverts, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
+
+        if (response.data.status === "success") {
+          const allAdverts = response.data.adverts;
+
+          // Randomly select one advert
+          if (allAdverts.length > 0) {
+            const randomIndex = Math.floor(Math.random() * allAdverts.length);
+            setAdvert(allAdverts[randomIndex]);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch adverts:", error);
+      }
+    };
+
+    fetchAdverts();
+  }, []);
+
   return (
     <section ref={ref} className={`w-full py-10 ${styles.body} bg-default`}>
       <Grid gutter={90} className={`font-sans mt-4`}>
@@ -90,7 +118,7 @@ export default function SingleBlog() {
             className="flex flex-col items-stretch max-lg:mx-auto"
           >
             <Image
-              src={selectedBlog.blog_data.image.file_path} // Display the image from the selected blog
+              src={`${encodeURIComponent(selectedBlog.blog_data.image.file_path)}`} // Display the image from the selected blog
               className={`w-full object-cover mb-1 shadow-2xl object-top rounded-xl max-h-[400px] h-full`}
               alt="Blog Image"
             />
@@ -112,6 +140,7 @@ export default function SingleBlog() {
           </animated.div>
         </Grid.Col>
       </Grid>
+      <BackgroundImage className={`w-full h-[250px] rounded-lg`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
     </section>
   );
 }

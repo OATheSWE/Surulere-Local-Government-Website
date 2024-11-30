@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Text } from "@mantine/core";
 import { useTrail, animated, useSpring } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
+import { styles } from "@/src/data";
 
 const statistics = [
   {
@@ -48,7 +49,7 @@ const KeyStatistics: React.FC = () => {
   return (
     <div
       ref={ref}
-      className="py-12 px-4"
+      className={`py-12 ${styles.body}`}
       style={{ background: "radial-gradient(circle, #FFFFFF, #A3B78D)" }}
     >
       <animated.div style={leftColAnimation}>

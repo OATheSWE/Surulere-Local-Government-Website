@@ -6,6 +6,7 @@ import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
 import { api } from "@/src/api";
+import { styles } from "@/src/data";
 
 const GalleryCard: React.FC<{ imageUrl: string }> = ({ imageUrl }) => (
   <Card shadow="xl" padding={0} radius="md" className="h-[300px] rounded-lg">
@@ -158,7 +159,7 @@ const GalleryCarousel: React.FC = () => {
 
   return (
     <div
-      className="py-16"
+      className={`py-16 ${styles.body}`}
       style={{ background: "radial-gradient(circle, #FDFDFC, #AEBF9B)" }}
       ref={ref}
     >
@@ -182,7 +183,7 @@ const GalleryCarousel: React.FC = () => {
               key={index}
               className={`w-[${100 / itemsPerPage}%] flex-shrink-0 px-2`}
             >
-              <GalleryCard imageUrl={GalleryItem.gallery_data?.file_path} />
+              <GalleryCard imageUrl={`${encodeURIComponent(GalleryItem.gallery_data?.file_path)}`} />
             </div>
           ))}
         </div>
@@ -204,7 +205,7 @@ const GalleryCarousel: React.FC = () => {
               key={index}
               className={`w-[${100 / itemsPerPage}%] flex-shrink-0 px-2`}
             >
-              <GalleryCard imageUrl={GalleryItem.gallery_data?.file_path} />
+              <GalleryCard imageUrl={`${encodeURIComponent(GalleryItem.gallery_data?.file_path)}`} />
             </div>
           ))}
         </div>

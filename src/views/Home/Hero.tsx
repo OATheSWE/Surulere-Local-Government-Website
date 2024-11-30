@@ -4,6 +4,7 @@ import { Container, Text, Grid, Button, BackgroundImage } from "@mantine/core";
 import { ImageCollection } from "@/assets";
 import { useInView } from "react-intersection-observer";
 import { useSpring, animated } from "@react-spring/web";
+import "./Hero.css"; // Adjust the path if necessary
 
 const Hero: React.FC = () => {
   const [ref, inView] = useInView({
@@ -30,13 +31,13 @@ const Hero: React.FC = () => {
       <animated.div className="relative z-10 text-center" style={leftColAnimation}>
         <Text
           size="xl"
-          className="mt-6 text-5xl font-bold text-center text-primary"
+          className="mt-6 lg:text-7xl max-lg:text-5xl font-bold text-center text-primary text-radiant"
         >
           SURULERE<br />LOCAL<br />GOVERNMENT
         </Text>
         <Text
           size="lg"
-          className="mt-2 text-xl text-primary font-bold text-center"
+          className="mt-2 lg:text-2xl max-lg:text-xl text-primary font-bold text-center text-radiant"
         >
           LAGOS, NIGERIA
         </Text>

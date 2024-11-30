@@ -1,8 +1,11 @@
-import { Title, Text, Grid, Image } from "@mantine/core";
+import { Title, Text, Grid, Image, BackgroundImage } from "@mantine/core";
 import { useInView } from "react-intersection-observer";
 import { useSpring, animated } from "@react-spring/web";
 import { styles } from "../data";
 import { ImageCollection } from "@/assets";
+import { useEffect, useState } from "react";
+import { api } from "../api";
+import axios from "axios";
 
 export default function History() {
   const [ref, inView] = useInView({
@@ -42,6 +45,34 @@ export default function History() {
     config: { mass: 1, tension: 80, friction: 26 },
   });
 
+
+  const [advert, setAdvert] = useState();
+
+  useEffect(() => {
+    const fetchAdverts = async () => {
+      try {
+        const response = await axios.get(api.fetchAllAdverts, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
+
+        if (response.data.status === "success") {
+          const allAdverts = response.data.adverts;
+
+          // Randomly select one advert
+          if (allAdverts.length > 0) {
+            const randomIndex = Math.floor(Math.random() * allAdverts.length);
+            setAdvert(allAdverts[randomIndex]);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch adverts:", error);
+      }
+    };
+
+    fetchAdverts();
+  }, []);
 
 
   return (
@@ -172,6 +203,8 @@ export default function History() {
           </div>
         </Grid.Col>
       </Grid>
+      <BackgroundImage className={`w-full h-[250px] rounded-lg`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
+
     </section>
   );
 }

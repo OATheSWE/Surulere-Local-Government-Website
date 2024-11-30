@@ -8,6 +8,7 @@ import { useInView } from "react-intersection-observer";
 import axios from "axios";
 import { api } from "@/src/api";
 import { Link } from "expo-router";
+import { styles } from "@/src/data";
 
 const NewsCard: React.FC<{
   title: string;
@@ -153,7 +154,7 @@ const NewsCarousel: React.FC = () => {
   };
 
   return (
-    <BackgroundImage ref={ref} src={ImageCollection.bgdesign} className="py-16 bg-white">
+    <BackgroundImage ref={ref} src={ImageCollection.bgdesign} className={`py-16 bg-white ${styles.body}`}>
       <animated.div style={leftColAnimation}>
         <Text className="text-center mb-6 text-3xl">News & Notices</Text>
       </animated.div>
@@ -183,7 +184,7 @@ const NewsCarousel: React.FC = () => {
                 <NewsCard
                   title={newsItem.blog_data?.blog_title}
                   description={newsItem.blog_data?.blog_author}
-                  imageUrl={newsItem.blog_data.image?.file_path}
+                  imageUrl={`${encodeURIComponent(newsItem.blog_data.image?.file_path)}`}
                   blogId={newsItem.blog_id}
                 />
               </div>

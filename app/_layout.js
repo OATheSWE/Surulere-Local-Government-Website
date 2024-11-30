@@ -18,7 +18,7 @@ const App = () => {
     // Set a timer to hide the splash screen after 5 seconds
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 5000);
+    }, 7000);
 
     // Clear the timer if the component is unmounted
     return () => clearTimeout(timer);

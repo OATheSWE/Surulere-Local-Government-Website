@@ -222,7 +222,7 @@ const ContactForm: React.FC = () => {
         </div>
       </form>
       <SuccessModal ref={successModalRef} text={modalText} />
-      <BackgroundImage className={`w-full h-[250px] rounded-lg`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
+      <BackgroundImage className={`w-full h-[250px] rounded-lg mt-12`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
     </div>
   );
 };

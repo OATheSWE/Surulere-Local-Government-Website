@@ -45,7 +45,7 @@ const AllBlogs = () => {
     const now = new Date();
     const pastDate = new Date(timestamp);
     const diffInSeconds = Math.floor((now - pastDate) / 1000); // Difference in seconds
-  
+
     if (diffInSeconds < 60) {
       return `${diffInSeconds} seconds ago`;
     } else if (diffInSeconds < 3600) {
@@ -91,27 +91,49 @@ const AllBlogs = () => {
     fetchAdverts();
   }, []);
 
-
-  
-
   const allImages = trail.map((style, index) => (
     <>
-    <Grid.Col ref={ref} span={{ base: 12, xs: 6, sm: 4, md: 3 }} key={index} className="mt-8">
-      <animated.div style={style} className={`w-full h-[250px] overflow-hidden rounded-xl`} onClick={() => {router.push(`/website/blog?blog_id=${blogs[index].blog_id}`)}}>
-        <Image
-          src={`${encodeURIComponent(blogs[index].blog_data.image.file_path)}`}
-          className={`w-full h-[150px] object-cover object-top rounded-xl transition duration-300 shadow-xl`}
-          alt="Gallery Image"
-          loading="lazy"
-        />
-        <Text className="leading-4 my-2">{blogs[index].blog_data.blog_title}</Text>
-        <Text className="text-[13px]">By {blogs[index].blog_data.blog_author}, <span>{formatRelativeTime(blogs[index].created_at)}</span></Text>
-      </animated.div>
-    </Grid.Col>
-    <BackgroundImage className={`w-full h-[250px] rounded-lg`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
+      <Grid.Col
+        ref={ref}
+        span={{ base: 12, xs: 6, sm: 4, md: 3 }}
+        key={index}
+        className="mt-8"
+      >
+        <animated.div
+          style={style}
+          className={`w-full h-[250px] overflow-hidden rounded-xl`}
+          onClick={() => {
+            router.push(`/website/blog?blog_id=${blogs[index].blog_id}`);
+          }}
+        >
+          <Image
+            src={`${encodeURIComponent(
+              blogs[index].blog_data.image.file_path
+            )}`}
+            className={`w-full h-[150px] object-cover object-top rounded-xl transition duration-300 shadow-xl`}
+            alt="Gallery Image"
+            loading="lazy"
+          />
+          <Text className="leading-4 my-2">
+            {blogs[index].blog_data.blog_title}
+          </Text>
+          <Text className="text-[13px]">
+            By {blogs[index].blog_data.blog_author},{" "}
+            <span>{formatRelativeTime(blogs[index].created_at)}</span>
+          </Text>
+        </animated.div>
+      </Grid.Col>
     </>
   ));
-  return <Grid  className={`${styles.body} py-16`}>{allImages}</Grid>;
+  return (
+    <>
+      <Grid className={`${styles.body} py-16`}>{allImages}</Grid>
+      <BackgroundImage
+        className={`w-full h-[250px] rounded-lg mt-12`}
+        src={`${encodeURIComponent(advert?.advert_data?.file_path)}`}
+      />
+    </>
+  );
 };
 
 export default AllBlogs;

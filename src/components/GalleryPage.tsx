@@ -91,13 +91,17 @@ const GalleryPage = () => {
           />
         </animated.div>
       </Grid.Col>
+    </>
+  ));
+  return (
+    <>
+      <Grid className={`${styles.body} py-16`}>{allImages}</Grid>
       <BackgroundImage
-        className={`w-full h-[250px] rounded-lg`}
+        className={`w-full h-[250px] rounded-lg mt-12`}
         src={`${encodeURIComponent(advert?.advert_data?.file_path)}`}
       />
     </>
-  ));
-  return <Grid className={`${styles.body} py-16`}>{allImages}</Grid>;
+  );
 };
 
 export default GalleryPage;

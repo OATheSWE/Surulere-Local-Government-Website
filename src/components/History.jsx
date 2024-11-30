@@ -203,7 +203,7 @@ export default function History() {
           </div>
         </Grid.Col>
       </Grid>
-      <BackgroundImage className={`w-full h-[250px] rounded-lg`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
+      <BackgroundImage className={`w-full h-[250px] rounded-lg mt-12`} src={`${encodeURIComponent(advert?.advert_data?.file_path)}`} />
 
     </section>
   );

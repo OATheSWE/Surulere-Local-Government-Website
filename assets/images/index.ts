@@ -17,7 +17,9 @@ const bgdesign = Asset.fromModule(require('./bgdesign.png')).uri;
 const bg = Asset.fromModule(require('./bg.png')).uri;
 const chairman = Asset.fromModule(require('./chairman.jpeg')).uri;
 const wave1 = Asset.fromModule(require('./wave1.png')).uri;
-const wave2 = Asset.fromModule(require('./wave2.png')).uri; 
+const wave2 = Asset.fromModule(require('./wave2.png')).uri;
+const nav1 = Asset.fromModule(require('./nav1.png')).uri;
+const nav2 = Asset.fromModule(require('./nav2.png')).uri;
 
 const ImageCollection = {
    logo,
@@ -36,6 +38,9 @@ const ImageCollection = {
    slider2,
    slider3,
    slider4,
+   nav1,
+   nav2,
+
 }
 
 export { ImageCollection };

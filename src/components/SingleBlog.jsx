@@ -15,7 +15,6 @@ export default function SingleBlog() {
   });
 
   const { blog_id } = useLocalSearchParams(); // Extract blog_id from URL parameters
-  const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null); // To store the selected blog data
 
   // Animation for the left column (coming from the left)
@@ -46,7 +45,6 @@ export default function SingleBlog() {
         },
       });
       if (response.data.status === "success") {
-        setBlogs(response.data.blogs);
         const blog = response.data.blogs.find((b) => b.blog_id === blog_id); // Find the matching blog
         setSelectedBlog(blog); // Set the selected blog
       }
@@ -77,11 +75,8 @@ export default function SingleBlog() {
     }
   }
 
-  if (!selectedBlog) {
-    return <div>Loading...</div>; // Show loading state until the selected blog is found
-  }
-
-  const [advert, setAdvert] = useState();
+  const [adverts, setAdverts] = useState([]);
+  const [advert, setAdvert] = useState(null);
 
   useEffect(() => {
     const fetchAdverts = async () => {
@@ -95,8 +90,9 @@ export default function SingleBlog() {
         if (response.data.status === "success") {
           const allAdverts = response.data.adverts;
 
-          // Randomly select one advert
           if (allAdverts.length > 0) {
+            setAdverts(allAdverts);
+            // Set the initial advert
             const randomIndex = Math.floor(Math.random() * allAdverts.length);
             setAdvert(allAdverts[randomIndex]);
           }
@@ -109,6 +105,22 @@ export default function SingleBlog() {
     fetchAdverts();
   }, []);
 
+  useEffect(() => {
+    if (adverts.length > 0) {
+      const interval = setInterval(() => {
+        const randomIndex = Math.floor(Math.random() * adverts.length);
+        setAdvert(adverts[randomIndex]);
+      }, 5000); // Change advert every 5 seconds
+
+      return () => clearInterval(interval); // Cleanup on component unmount
+    }
+  }, [adverts]);
+  
+  if (!selectedBlog) {
+    return <div>Loading...</div>; // Show loading state until the selected blog is found
+  }
+
+
   return (
     <section ref={ref} className={`w-full py-10 ${styles.body} bg-default`}>
       <Grid gutter={90} className={`font-sans mt-4`}>
@@ -118,7 +130,7 @@ export default function SingleBlog() {
             className="flex flex-col items-stretch max-lg:mx-auto"
           >
             <Image
-              src={`${encodeURIComponent(selectedBlog.blog_data.image.file_path)}`} // Display the image from the selected blog
+              src={`${encodeURIComponent(selectedBlog.blog_data.image?.file_path)}`} // Display the image from the selected blog
               className={`w-full object-cover mb-1 shadow-2xl object-top rounded-xl max-h-[400px] h-full`}
               alt="Blog Image"
             />

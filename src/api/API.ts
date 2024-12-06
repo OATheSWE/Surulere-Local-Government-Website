@@ -1,28 +1,28 @@
 
 const apiUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
 
-const login = `php/login.php`;
-const fetchAllDepartments = `php/fetchAllDepartments.php`;
-const createDepartment = `php/createDepartment.php`;
-const updateDepartment = `php/updateDepartment.php`;
-const deleteDepartment = `php/deleteDepartment.php`;
-const fetchAllBlogs = `php/fetchAllBlogs.php`;
-const createBlog = `php/createBlog.php`;
-const updateBlog = `php/updateBlog.php`;
-const deleteBlog = `php/deleteBlog.php`;
-const fetchAllAdverts = `php/fetchAllAdverts.php`;
-const createAdvert = `php/createAdvert.php`;
-const updateAdvert = `php/updateAdvert.php`;
-const deleteAdvert = `php/deleteAdvert.php`;
-const fetchAllGallery = `php/fetchAllGallery.php`;
-const createGallery = `php/createGallery.php`;
-const updateGallery = `php/updateGallery.php`;
-const deleteGallery = `php/deleteGallery.php`;
-const fetchAllCouncils = `php/fetchAllCouncils.php`;
-const createCouncil = `php/createCouncil.php`;
-const updateCouncil = `php/updateCouncil.php`;
-const deleteCouncil = `php/deleteCouncil.php`;
-const sendEmail = `php/sendEmail.php`;
+const login = `http://localhost:8000/login.php`;
+const fetchAllDepartments = `http://localhost:8000/fetchAllDepartments.php`;
+const createDepartment = `http://localhost:8000/createDepartment.php`;
+const updateDepartment = `http://localhost:8000/updateDepartment.php`;
+const deleteDepartment = `http://localhost:8000/deleteDepartment.php`;
+const fetchAllBlogs = `http://localhost:8000/fetchAllBlogs.php`;
+const createBlog = `http://localhost:8000/createBlog.php`;
+const updateBlog = `http://localhost:8000/updateBlog.php`;
+const deleteBlog = `http://localhost:8000/deleteBlog.php`;
+const fetchAllAdverts = `http://localhost:8000/fetchAllAdverts.php`;
+const createAdvert = `http://localhost:8000/createAdvert.php`;
+const updateAdvert = `http://localhost:8000/updateAdvert.php`;
+const deleteAdvert = `http://localhost:8000/deleteAdvert.php`;
+const fetchAllGallery = `http://localhost:8000/fetchAllGallery.php`;
+const createGallery = `http://localhost:8000/createGallery.php`;
+const updateGallery = `http://localhost:8000/updateGallery.php`;
+const deleteGallery = `http://localhost:8000/deleteGallery.php`;
+const fetchAllCouncils = `http://localhost:8000/fetchAllCouncils.php`;
+const createCouncil = `http://localhost:8000/createCouncil.php`;
+const updateCouncil = `http://localhost:8000/updateCouncil.php`;
+const deleteCouncil = `http://localhost:8000/deleteCouncil.php`;
+const sendEmail = `http://localhost:8000/sendEmail.php`;
 
 
 

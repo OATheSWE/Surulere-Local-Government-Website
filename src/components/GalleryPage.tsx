@@ -41,7 +41,8 @@ const GalleryPage = () => {
     }
   };
 
-  const [advert, setAdvert] = useState();
+  const [adverts, setAdverts] = useState([]);
+  const [advert, setAdvert] = useState(null);
 
   useEffect(() => {
     const fetchAdverts = async () => {
@@ -55,8 +56,9 @@ const GalleryPage = () => {
         if (response.data.status === "success") {
           const allAdverts = response.data.adverts;
 
-          // Randomly select one advert
           if (allAdverts.length > 0) {
+            setAdverts(allAdverts);
+            // Set the initial advert
             const randomIndex = Math.floor(Math.random() * allAdverts.length);
             setAdvert(allAdverts[randomIndex]);
           }
@@ -68,6 +70,17 @@ const GalleryPage = () => {
 
     fetchAdverts();
   }, []);
+
+  useEffect(() => {
+    if (adverts.length > 0) {
+      const interval = setInterval(() => {
+        const randomIndex = Math.floor(Math.random() * adverts.length);
+        setAdvert(adverts[randomIndex]);
+      }, 5000); // Change advert every 5 seconds
+
+      return () => clearInterval(interval); // Cleanup on component unmount
+    }
+  }, [adverts]);
 
   const allImages = trail.map((style, index) => (
     <>

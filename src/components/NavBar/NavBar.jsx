@@ -143,8 +143,21 @@ export default function NavBar() {
   return (
     <Box className="relative z-[10]">
       <header
-        className={`flex max-lg:justify-end lg:justify-center  items-center font-sans bg-white ${classes.header} ${styles.body}`}
+        className={`flex justify-between  items-center font-sans bg-white ${classes.header} ${styles.body}`}
       >
+        <div className="flex space-x-4 -mt-4 items-center justify-center">
+          <Image
+            src={ImageCollection.nav1}
+            className={`w-[50px] md:w-[60px]`}
+            alt="Logo Image 1"
+          />
+          <div className="bg-primary w-[1.5px] h-[40px]"></div>
+          <Image
+            src={ImageCollection.nav2}
+            className={`w-[50px] md:w-[60px]`}
+            alt="Logo Image 1"
+          />
+        </div>
         <Group h="100%" gap={0} className="hidden lg:flex">
           {items}
         </Group>
@@ -154,6 +167,7 @@ export default function NavBar() {
           hiddenFrom="md"
           size={23}
           color="black"
+          className="-mt-2"
         />
       </header>
 

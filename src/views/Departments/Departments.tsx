@@ -281,7 +281,7 @@ export default function Departments() {
             <BackgroundImage
               key={dept.department_id}
               className={`max-w-[300px] w-full h-[200px] border-primary border-2 hover:-translate-y-2 duration-300 transition flex flex-col justify-between p-4 rounded-lg`}
-              src={`${encodeURIComponent(dept.department_data.image.path)}`}
+              src={`${encodeURIComponent(dept.department_data.image?.path)}`}
             >
               <div>
                 <h2 className="text-white bg-primary w-full p-1 rounded-full text-center">{dept.department_name}</h2>
